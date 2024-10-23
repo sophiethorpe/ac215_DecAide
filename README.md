@@ -56,6 +56,20 @@ The model employs transfer learning, making use of a ResNet50 model initially tr
 
 The performance of the model was fairly good, with over 50% accuracy, which is good considering the relatively large number of categories compared to the size of the dataset. However, more fine-tuning will be done, with data augmentation methods, SMOTE, and further hyperparameter fine-tuning being done to address class imbalance, distribution shift, and other issues currently seen in the model and dataset. 
 
+Tutorial:
+
+1) cd into `/modeling`, where you can find the `/initial_models_ac215.ipynb` notebook for the model.
+
+2) Download `/initial_models_ac215.ipynb`, open it in Google Colab, and choose "Run all" under the "Runtime" tab.
+
+3) When prompted, sign into your Google account.
+
+4) a. In the third cell, you should see "Do you want to continue (Y/n)?". Click next to this, type "Y", and hit `Enter`.
+   b. You should then see "Go to the following link in your browser, and complete the sign-in prompts:" and a link.
+   c. Click on the link, sign into your Google account again, and then copy the link by clicking "Copy" on the final page.
+   d. Paste this link into the Google Colab next to "Once finished, enter the verification code provided in your browser:" and hit `Enter`. 
+
+5) The rest of the notebook should now run and train the model. 
 
 ## 5. Mock App
 
