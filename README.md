@@ -64,10 +64,7 @@ Tutorial:
 
 3) When prompted, sign into your Google account.
 
-4) a. In the third cell, you should see "Do you want to continue (Y/n)?". Click next to this, type "Y", and hit `Enter`.
-   b. You should then see "Go to the following link in your browser, and complete the sign-in prompts:" and a link.
-   c. Click on the link, sign into your Google account again, and then copy the link by clicking "Copy" on the final page.
-   d. Paste this link into the Google Colab next to "Once finished, enter the verification code provided in your browser:" and hit `Enter`. 
+4) In the third cell, you should see "Do you want to continue (Y/n)?". Click next to this, type "Y", and hit `Enter`. You should then see "Go to the following link in your browser, and complete the sign-in prompts:" and a link. Click on the link, sign into your Google account again, and then copy the link by clicking "Copy" on the final page. Paste this link into the Google Colab next to "Once finished, enter the verification code provided in your browser:" and hit `Enter`. 
 
 5) The rest of the notebook should now run and train the model. 
 
