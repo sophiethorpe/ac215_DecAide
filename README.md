@@ -50,7 +50,11 @@ Tutorial:
 
 ## 4. Modeling
 
-****TODO
+For the intial model, the cleaned data is loaded from the bucket, converted to tensors, and standardized. The corresponding year labels for the images are encoded using sklearn, duplicates are dropped from the dataset, and a TensorFlow Dataset is created. 
+
+The model employs transfer learning, making use of a ResNet50 model initially trained on the ImageNet dataset. A global average pooling layer was added along with a dense layer and the output layer, which outputs a year category for each image. The last ten layers of the ResNet50 model were unfrozen and trained. Categorical cross-entropy was used for the loss, Adam for the optimizer, accuracy for the metric, and the model was trained for ten epochs. 
+
+The performance of the model was fairly good, with over 50% accuracy, which is good considering the relatively large number of categories compared to the size of the dataset. However, more fine-tuning will be done, with data augmentation methods, SMOTE, and further hyperparameter fine-tuning being done to address class imbalance, distribution shift, and other issues currently seen in the model and dataset. 
 
 
 ## 5. Mock App
