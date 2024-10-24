@@ -1,10 +1,42 @@
-## 1. WebScraping <br>
+## 1. DecAide Repo Structure 
+
+**The following diagram is based on the milestone2 branch where we stored the relevant information for the milestone 2 deliverable.**
+<br>
+.
+├── README.md
+├── app_mockups
+│   └── drafts
+│       ├── APCOMP 215 Milestone 2 Mock Up.pdf
+│       └── Milestone 2 Mock Up Backend.pdf
+├── data_versioning
+│   ├── Dockerfile
+│   ├── Pipfile
+│   ├── Pipfile.lock
+│   ├── decaide_data.dvc
+│   ├── docker-entrypoint.sh
+│   └── docker-shell.sh
+├── modeling
+│   └── initial_models_ac215.ipynb
+├── preprocessing
+│   ├── Dockerfile
+│   ├── Pipfile
+│   ├── Pipfile.lock
+│   ├── docker-entrypoint.sh
+│   ├── docker-shell.sh
+│   └── preprocessing.py
+└── scraping
+    ├── download_pics.ipynb
+    └── scraping_urls.ipynb
+
+<br>
+
+## 2. WebScraping <br>
 
 The current version of images are scarped from runway images on vougue.com. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. PLEASE DO NOT RUN the notebooks for time considerations.
 
-## 2. Preprocessing
+## 3. Preprocessing
 
-The processing pipeline is used to resize the images and make the resolutions compatible for our models. The processing is done locally, then the processed images can be uploaded to buckets.
+The processing pipeline is used to resize the images and make the resolutions compatible for our models. The processing is done locally using Docker containers, then the processed images can be uploaded to Google Cloud buckets.
 
 Tutorial:
 
@@ -29,7 +61,7 @@ The folder structure should look like:
     * clean_data
     * other secrets
 
-## 3. Data Versioning
+## 4. Data Versioning
 
 We used the standard data versioning pipeline as shown in the tutorial #7 `https://github.com/dlops-io/data-versioning`.
 
@@ -48,7 +80,7 @@ Tutorial:
 6) Run `dvc push`.
 
 
-## 4. Modeling
+## 5. Modeling
 
 For the intial model, the cleaned data is loaded from the bucket, converted to tensors, and standardized. The corresponding year labels for the images are encoded using sklearn, duplicates are dropped from the dataset, and a TensorFlow Dataset is created. 
 
@@ -56,18 +88,9 @@ The model employs transfer learning, making use of a ResNet50 model initially tr
 
 The performance of the model was fairly good, with over 50% accuracy, which is good considering the relatively large number of categories compared to the size of the dataset. However, more fine-tuning will be done, with data augmentation methods, SMOTE, and further hyperparameter fine-tuning being done to address class imbalance, distribution shift, and other issues currently seen in the model and dataset. 
 
-Tutorial:
 
-1) cd into `/modeling`, where you can find the `/initial_models_ac215.ipynb` notebook for the model.
+## 6. Mock App
 
-2) Download `/initial_models_ac215.ipynb`, open it in Google Colab, and choose "Run all" under the "Runtime" tab.
+The mock up of the app can be found in the app_mockups subfolder under the name "Milestone 2 App Mock up Final". Users can upload a runway image of an outfit, and the app will determine the decade it is from, providing similar outfits from that era as additional references. 
 
-3) When prompted, sign into your Google account.
-
-4) In the third cell, you should see "Do you want to continue (Y/n)?". Click next to this, type "Y", and hit `Enter`. You should then see "Go to the following link in your browser, and complete the sign-in prompts:" and a link. Click on the link, sign into your Google account again, and then copy the link by clicking "Copy" on the final page. Paste this link into the Google Colab next to "Once finished, enter the verification code provided in your browser:" and hit `Enter`. 
-
-5) The rest of the notebook should now run and train the model. 
-
-## 5. Mock App
-
-*****TODO
+The app connects to a Google Colab script that runs a machine learning model, which scrapes relevant fashion data and stores it in Google Cloud. The data processing is managed through a Docker container, so that our app is scalable. The app is designed for efficient fashion era identification, making it a useful tool for stylists.
