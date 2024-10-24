@@ -2,6 +2,8 @@
 
 **The following diagram is based on the milestone2 branch where we stored the relevant information for the milestone 2 deliverable.**
 <br>
+
+```
 .
 ├── README.md
 ├── app_mockups
@@ -27,6 +29,7 @@
 └── scraping
     ├── download_pics.ipynb
     └── scraping_urls.ipynb
+```
 
 <br>
 
