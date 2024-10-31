@@ -1,6 +1,6 @@
 ## 1. DecAide Repo Structure 
 
-**The following diagram is based on the milestone2 branch where we stored the relevant information for the milestone 2 deliverable.**
+**The following diagram is based on the milestone3 branch where we stored the relevant information for the milestone 3 deliverable.**
 <br>
 
 ```
@@ -19,6 +19,7 @@
 │   └── docker-shell.sh
 ├── modeling
 │   └── initial_models_ac215.ipynb
+**│   └── Copy of initial_models_ac215.ipynb**
 ├── preprocessing
 │   ├── Dockerfile
 │   ├── Pipfile
@@ -89,7 +90,7 @@ For the intial model, the cleaned data is loaded from the bucket, converted to t
 
 The model employs transfer learning, making use of a ResNet50 model initially trained on the ImageNet dataset. A global average pooling layer was added along with a dense layer and the output layer, which outputs a year category for each image. The last ten layers of the ResNet50 model were unfrozen and trained. Categorical cross-entropy was used for the loss, Adam for the optimizer, accuracy for the metric, and the model was trained for ten epochs. 
 
-The performance of the model was fairly good, with over 50% accuracy, which is good considering the relatively large number of categories compared to the size of the dataset. However, more fine-tuning will be done, with data augmentation methods, SMOTE, and further hyperparameter fine-tuning being done to address class imbalance, distribution shift, and other issues currently seen in the model and dataset. 
+**We were able to achieve over 90% classification accuracy on our model after fine-tuning it and training it for more epochs with a GPU. Most of the progress for this milestone consisted of experimenting with different methodologies for running and hosting the model.** However, more fine-tuning will be done, with data augmentation methods, SMOTE, and further hyperparameter fine-tuning being done to address class imbalance, distribution shift, and other issues currently seen in the model and dataset. 
 
 
 ## 6. Mock App
