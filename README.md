@@ -19,7 +19,7 @@
 │   └── docker-shell.sh
 ├── modeling
 │   └── initial_models_ac215.ipynb
-**│   └── Copy of initial_models_ac215.ipynb**
+**│   └── Copy_of_initial_models_ac215.ipynb**
 ├── preprocessing
 │   ├── Dockerfile
 │   ├── Pipfile
