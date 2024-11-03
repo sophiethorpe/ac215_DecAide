@@ -6,30 +6,40 @@
 ```
 .
 ├── README.md
-├── app_mockups
-│   └── drafts
-│       ├── APCOMP 215 Milestone 2 Mock Up.pdf
-│       └── Milestone 2 Mock Up Backend.pdf
-├── data_versioning
-│   ├── Dockerfile
-│   ├── Pipfile
-│   ├── Pipfile.lock
-│   ├── decaide_data.dvc
-│   ├── docker-entrypoint.sh
-│   └── docker-shell.sh
-├── modeling
-│   └── initial_models_ac215.ipynb
-**│   └── Copy_of_initial_models_ac215.ipynb**
-├── preprocessing
-│   ├── Dockerfile
-│   ├── Pipfile
-│   ├── Pipfile.lock
-│   ├── docker-entrypoint.sh
-│   ├── docker-shell.sh
-│   └── preprocessing.py
-└── scraping
-    ├── download_pics.ipynb
-    └── scraping_urls.ipynb
+├── Midterm Presentation
+│   └── Milestone 3 Presentaion_ DecAide (1).pptx
+├── notebooks
+│   └── eda_initial_models_ac215.ipynb
+├── references
+│   └── Milestone 3_ Draft .docx
+├── reports
+│   └── app_mockups
+│       ├── Milestone 2 Mock Up Final.pdf
+│       └── drafts
+│           ├── APCOMP 215 Milestone 2 Mock Up.pdf
+│           └── Milestone 2 Mock Up Backend.pdf
+└── src
+    ├── datapipeline
+    │   ├── data_versioning
+    │   │   ├── Dockerfile
+    │   │   ├── Pipfile
+    │   │   ├── Pipfile.lock
+    │   │   ├── decaide_data.dvc
+    │   │   ├── docker-entrypoint.sh
+    │   │   └── docker-shell.sh
+    │   ├── preprocessing
+    │   │   ├── Dockerfile
+    │   │   ├── Pipfile
+    │   │   ├── Pipfile.lock
+    │   │   ├── docker-entrypoint.sh
+    │   │   ├── docker-shell.sh
+    │   │   └── preprocessing.py
+    │   └── scraping
+    │       ├── download_pics.ipynb
+    │       └── scraping_urls.ipynb
+    └── models
+        └── modeling
+            └── updated_models_ac215.ipynb
 ```
 
 <br>
