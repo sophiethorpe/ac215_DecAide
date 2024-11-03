@@ -1,4 +1,7 @@
-## 1. DecAide Repo Structure 
+Milestone 3 
+<br>
+
+## Project Milestone 3 Organization
 
 **The following diagram is based on the milestone3 branch where we stored the relevant information for the milestone 3 deliverable.**
 <br>
@@ -43,18 +46,23 @@
 ```
 
 <br>
+Milestone3
+<br>
 
-## 2. WebScraping <br>
+In this milestone, we have the components for data management, including versioning, and the computer vision model.  
 
-The current version of images are scarped from runway images on vougue.com. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. PLEASE DO NOT RUN the notebooks for time considerations.
+**Data** The current version of images are scarped from *runway images on vougue.com*. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. PLEASE DO NOT RUN the notebooks for time considerations.
 
-## 3. Preprocessing
+
+<br>
+
+### Preprocessing
 
 The processing pipeline is used to resize the images and make the resolutions compatible for our models. The processing is done locally using Docker containers, then the processed images can be uploaded to Google Cloud buckets.
 
 Tutorial:
 
-1) cd into `/preprocessing`, where you can find the Dockerfile, Pipfile, and docker-shell.sh.
+1) cd into `src/datapipeline/preprocessing`, where you can find the Dockerfile, Pipfile, and docker-shell.sh.
 
 2) Run `sh docker-shell.sh`. This will run the docker container.
 
@@ -75,13 +83,13 @@ The folder structure should look like:
     * clean_data
     * other secrets
 
-## 4. Data Versioning
+## Data Versioning
 
 We used the standard data versioning pipeline as shown in the tutorial #7 `https://github.com/dlops-io/data-versioning`.
 
 Tutorial:
 
-1) cd into `/data_versioning`, where you can find the Dockerfile, Pipfile, and docker-shell.sh.
+1) cd into `src/datapipeline/data_versioning`, where you can find the Dockerfile, Pipfile, and docker-shell.sh.
 
 2) Run `sh docker-shell.sh`. This will run the docker container.
 
@@ -94,19 +102,21 @@ Tutorial:
 6) Run `dvc push`.
 
 
-## 5. Modeling
+## Modeling
+
+`In this milestone we were able **icrease model acuracy from 50% to 90%** by training for an increased number of epochs **(now 30 epochs)**, details  below.`
 
 For the **updated** model, the cleaned data is loaded from the bucket, converted to tensors, and standardized. The corresponding year labels for the images are encoded using sklearn, duplicates are dropped from the dataset, and a TensorFlow Dataset is created. 
 
-**Our model can be found in Copy_of_initial_models_ac215.ipynb.** The model employs transfer learning, making use of a ResNet50 model initially trained on the ImageNet dataset. A global average pooling layer was added along with a dense layer and the output layer, which outputs a year category for each image. The last ten layers of the ResNet50 model were unfrozen and trained. Categorical cross-entropy was used for the loss, Adam for the optimizer, accuracy for the metric, and the model was trained for **thirty** epochs. 
+**Our model can be found in `models/modeling/updated_models_ac215.ipynb`.** The model employs transfer learning, making use of a ResNet50 model initially trained on the ImageNet dataset. A global average pooling layer was added along with a dense layer and the output layer, which outputs a year category for each image. The last ten layers of the ResNet50 model were unfrozen and trained. Categorical cross-entropy was used for the loss, Adam for the optimizer, accuracy for the metric, and the model was trained for **thirty** epochs. 
 
 **We were able to achieve over 90% classification accuracy on our model after fine-tuning it and training it for more epochs with a GPU. Most of the progress for this milestone consisted of experimenting with different methodologies for running and hosting the model.** However, more fine-tuning will be done, with data augmentation methods, SMOTE, and further hyperparameter fine-tuning being done to address class imbalance, distribution shift, and other issues currently seen in the model and dataset. 
 
 **Additionally, we plan on implementing caption generation for the images, as well as potentially a CLIP model fine-tuned on our dataset, in order to expand user features.**
 
 
-## 6. Mock App
+## Mock App
 
-The mock up of the app can be found in the app_mockups subfolder under the name "Milestone 2 App Mock up Final". Users can upload a runway image of an outfit, and the app will determine the decade it is from, providing similar outfits from that era as additional references. 
+The mock up of the app can be found in `reports/app_mockups/Milestone 2 Mock Up Final.pdf`. Users can upload a runway image of an outfit, and the app will determine the decade it is from, providing similar outfits from that era as additional references. 
 
 The app connects to a Google Colab script that runs a machine learning model, which scrapes relevant fashion data and stores it in Google Cloud. The data processing is managed through a Docker container, so that our app is scalable. The app is designed for efficient fashion era identification, making it a useful tool for stylists.
