@@ -166,7 +166,7 @@ For the **updated** model, the cleaned data is loaded from the bucket, converted
 
 <br>
 
-## Mock App
+### Mock App
 
 The mock up of the app can be found in `reports/app_mockups/Milestone 2 Mock Up Final.pdf`. Users can upload a runway image of an outfit, and the app will determine the decade it is from, providing similar outfits from that era as additional references. 
 
