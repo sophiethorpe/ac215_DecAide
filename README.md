@@ -1,6 +1,3 @@
-Milestone 3 
-<br>
-
 ## Project Milestone 3 Organization
 
 **The following diagram is based on the milestone3 branch where we stored the relevant information for the milestone 3 deliverable.**
@@ -44,15 +41,55 @@ Milestone 3
         └── modeling
             └── updated_models_ac215.ipynb
 ```
+# APCOMP 215: DecAide 
 
 <br>
-Milestone3
+
+**Team Members:** Tom Zhou, Paige Lee, Sophie Thrope, and Josha Thomas
+
+**Group Name:** DecAide
+
+**Project:** The "DecAide" project is a virtual tool designed to help celebrity stylists quickly access historical fashion references by analyzing high-fashion runway images. The team scraped approximately 6,000 runway images from vogue.com and trained a deep learning model using transfer learning with ResNet50. The model categorizes fashion looks by era, allowing stylists to streamline their research process when styling clients, especially for events like the Met Gala, where specific fashion themes must be followed. The project utilizes Docker containers and Google Cloud for scalability, with plans for further model optimization and deployment.
+
+Our midterm presentation is in the `Midterm Presentation` folder.
+
+<br>
+
+## **Milestone3**
+
 <br>
 
 In this milestone, we have the components for data management, including versioning, and the computer vision model.  
 
 **Data** The current version of images are scarped from *runway images on vougue.com*. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. PLEASE DO NOT RUN the notebooks for time considerations.
 
+<br>
+
+## **Midterm Presentation**
+
+*The `Midterm Presentation` directory contains the slides from our presentation.*
+
+<br>
+
+## **Notebooks**
+
+*The `notebooks` directory contains the eda_intial_mdoels notebook that outlines our prelimnary model.*
+
+<br>
+
+## **References**
+
+*The `references` directoey contains `Milestone 3_Draft.docx` it outlines the contents of our milestone 3 presentation, amnd includes a reference.*
+
+<br>
+
+## **SRC**
+
+*The `src` directory contains the corresponding directories and scripts for the data pipeline and modeling.*
+
+<br>
+
+### **Data Pipeline Overview**
 
 <br>
 
@@ -83,7 +120,7 @@ The folder structure should look like:
     * clean_data
     * other secrets
 
-## Data Versioning
+### Data Versioning
 
 We used the standard data versioning pipeline as shown in the tutorial #7 `https://github.com/dlops-io/data-versioning`.
 
@@ -101,8 +138,15 @@ Tutorial:
 
 6) Run `dvc push`.
 
+<br>
 
-## Modeling
+### Models
+
+*The models directory contains the updated modeling jupyter notebooks.*
+
+<br>
+
+### Modeling
 
 `In this milestone we were able **icrease model acuracy from 50% to 90%** by training for an increased number of epochs **(now 30 epochs)**, details  below.`
 
@@ -114,6 +158,13 @@ For the **updated** model, the cleaned data is loaded from the bucket, converted
 
 **Additionally, we plan on implementing caption generation for the images, as well as potentially a CLIP model fine-tuned on our dataset, in order to expand user features.**
 
+<br>
+
+## **Reports**
+
+*The reports directory includes a mockup of our app.*
+
+<br>
 
 ## Mock App
 
