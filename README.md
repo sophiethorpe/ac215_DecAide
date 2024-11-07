@@ -8,6 +8,8 @@
 ├── README.md
 ├── Midterm Presentation
 │   └── Milestone 3 Presentaion_ DecAide (1).pptx
+├── images
+    └── solution-arch.png
 ├── notebooks
 │   └── eda_initial_models_ac215.ipynb
 ├── references
