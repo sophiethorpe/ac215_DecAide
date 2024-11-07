@@ -61,6 +61,8 @@ In this milestone, we have the components for frontend, API service, also compon
 
 ### Application Design
 
+The people involved in the process of our solution include data scientists (build the ResNet model and design the web app), admin (maintain data in GCP buckets), developers (create the web app and connect it with the ResNet model via Fast API), and the users (celebrity stylists who upload images to and interact with the web app). The frontend of the web app is built using React, the backend service is GCP, the ResNet model was built, trained, and tested in a Google Colab notebook, and LLMs were used for caption text generation and/or similarity-based retrieval of word and image embeddings that are semantically similar in the representation space. The data store is Vogue images that were web-scraped and uploaded to a GCP bucket, Docker containers were used for the web scraping and model deployment, and GitHub was used for source control. 
+
 #### Solution Architecture
 
 Our Solution Architecture is a high-level overview of the system components and their interactions.
@@ -70,6 +72,8 @@ Our Solution Architecture is a high-level overview of the system components and 
 #### Technical Architecture
 
 Our Technical Architecture specifies the technologies, frameworks, and design patterns that we used.
+
+![](images/technical-arch.png)
 
 ## **Milestone3**
 
