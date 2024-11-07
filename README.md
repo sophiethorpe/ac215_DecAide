@@ -53,11 +53,7 @@
 
 Our midterm presentation is in the `Midterm Presentation` folder.
 
-<br>
-
 ## **Milestone4**
-
-<br>
 
 In this milestone, we have the components for frontend, API service, also components from previous milestones for data management, including versioning, as well as the computer vision and language models. This will be our user-facing application that ties together the various components built in previous milestones.
 
@@ -73,13 +69,9 @@ Our Technical Architecture specifies the technologies, frameworks, and design pa
 
 ## **Milestone3**
 
-<br>
-
 In this milestone, we have the components for data management, including versioning, and the computer vision model.  
 
 **Data** The current version of images are scarped from *runway images on vougue.com*. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. PLEASE DO NOT RUN the notebooks for time considerations.
-
-<br>
 
 ## **Midterm Presentation**
 
