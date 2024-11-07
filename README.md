@@ -63,6 +63,8 @@ In this milestone, we have the components for frontend, API service, also compon
 
 Our Solution Architecture is a high-level overview of the system components and their interactions.
 
+![](images/solution-arch.png)
+
 #### Technical Architecture
 
 Our Technical Architecture specifies the technologies, frameworks, and design patterns that we used.
