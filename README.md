@@ -55,6 +55,22 @@ Our midterm presentation is in the `Midterm Presentation` folder.
 
 <br>
 
+## **Milestone4**
+
+<br>
+
+In this milestone, we have the components for frontend, API service, also components from previous milestones for data management, including versioning, as well as the computer vision and language models. This will be our user-facing application that ties together the various components built in previous milestones.
+
+### Application Design
+
+#### Solution Architecture
+
+Our Solution Architecture is a high-level overview of the system components and their interactions.
+
+#### Technical Architecture
+
+Our Technical Architecture specifies the technologies, frameworks, and design patterns that we used.
+
 ## **Milestone3**
 
 <br>
