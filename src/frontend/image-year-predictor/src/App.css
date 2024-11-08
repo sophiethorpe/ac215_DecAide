@@ -1,5 +1,11 @@
 .App {
+  position: relative;
   text-align: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
 }
 
 .App-logo {
@@ -7,11 +13,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -22,7 +23,57 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  position: relative;
+  z-index: 2;
 }
+
+/* Keyframes for vertical pan effect for each image */
+@keyframes panVertical0 {
+  0% {
+    background-position-y: top; /* Start at the top */
+  }
+  100% {
+    background-position-y: bottom; /* Move to the bottom */
+  }
+}
+
+@keyframes panVertical1 {
+  0% {
+    background-position-y: top; /* Start at the top */
+  }
+  100% {
+    background-position-y: bottom; /* Move to the bottom */
+  }
+}
+
+@keyframes panVertical2 {
+  0% {
+    background-position-y: top; /* Start at the top */
+  }
+  100% {
+    background-position-y: bottom; /* Move to the bottom */
+  }
+}
+
+@keyframes panVertical3 {
+  0% {
+    background-position-y: top; /* Start at the top */
+  }
+  100% {
+    background-position-y: bottom; /* Move to the bottom */
+  }
+}
+
+@keyframes panVertical4 {
+  0% {
+    background-position-y: top; /* Start at the top */
+  }
+  100% {
+    background-position-y: bottom; /* Move to the bottom */
+  }
+}
+
+
 
 .App-link {
   color: #61dafb;
@@ -35,4 +86,23 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Ensure the background is behind the content */
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity here */
+  z-index: -1; /* Ensure overlay is behind content */
 }
