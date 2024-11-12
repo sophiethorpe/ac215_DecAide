@@ -22,6 +22,12 @@
 │           ├── APCOMP 215 Milestone 2 Mock Up.pdf
 │           └── Milestone 2 Mock Up Backend.pdf
 └── src
+    ├── api-service
+    │   ├── Dockerfile
+    │   ├── best_model.h5.keras
+    │   ├── docker-shell.sh
+    │   ├── label_encoder.pkl
+    │   ├── main.py
     ├── datapipeline
     │   ├── data_versioning
     │   │   ├── Dockerfile
@@ -40,27 +46,26 @@
     │   └── scraping
     │       ├── download_pics.ipynb
     │       └── scraping_urls.ipynb
-    ├──frontend
-    │   ├──image-year-predictor
-    │   │   ├──public
-    │   │   |    ├──favicon.ico
-    │   │   |    ├──index.html
-    │   │   |    ├──logo192.png
-    │   │   |    ├──logo512.png
-    │   │   |    ├──manifest.json
-    │   │   |    ├──robots.txt
-    │   │   ├─src
-    │   │   |    ├──App.css
-    │   │   |    ├──App.js
-    │   │   |    ├──App.test.js
-    │   │   |    ├──index.css
-    │   │   |    ├──index.js
-    │   │   |    ├──logo.svg
-    │   │   |    ├──reportWebVitals.js
-    │   │   |    ├──setupTests.js
-    │   │   ├─README.md
-    │   │   ├─package-lock.json
-    │   │   ├─package.json
+    ├──frontend/image-year-predictor
+    │   ├──public
+    │   |   ├──favicon.ico
+    │   |    ├──index.html
+    │   |    ├──logo192.png
+    |   |    ├──logo512.png
+    |   |    ├──manifest.json
+    |   |    ├──robots.txt
+    │   ├─src
+    │   |    ├──App.css
+    │   │    ├──App.js
+    │   │    ├──App.test.js
+    │   │    ├──index.css
+    │   │    ├──index.js
+    │   │    ├──logo.svg
+    │   │    ├──reportWebVitals.js
+    │   │    ├──setupTests.js
+    │   ├─README.md
+    │   ├─package-lock.json
+    │   ├─package.json
     └── models
         └── modeling
             └── updated_models_ac215.ipynb
