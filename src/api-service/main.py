@@ -100,12 +100,15 @@ async def predict(file: UploadFile = File(...)):
         # Make the prediction
         logging.debug(f"Making a prediction for image: {file.filename}")
         prediction = model.predict(processed_image)
-        
+        logging.debug(f"Model prediction output: {prediction}")
+
         # Get the predicted class index
         predicted_class_index = np.argmax(prediction, axis=1)[0]
-        
+        logging.debug(f"Predicted class index: {predicted_class_index}")
+
         # Decode the prediction to a readable label
         predicted_label = label_encoder.inverse_transform([predicted_class_index])[0]
+        logging.debug(f"Predicted label: {predicted_label}")
 
         return JSONResponse(content={"predicted_class": str(predicted_label)})
     
