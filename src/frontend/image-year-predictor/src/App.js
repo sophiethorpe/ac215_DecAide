@@ -37,25 +37,50 @@ function App() {
     transition: 'background-image 2s ease-in-out',
   };
 
-
   const [file, setFile] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const [loading, setLoading] = useState(false); // Loading state to handle API call
+  const [imageUrl, setImageUrl] = useState(null); // State to hold image URL for preview
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const uploadedFile = e.target.files[0];
+    if (uploadedFile && !uploadedFile.type.startsWith('image/')) {
+      alert("Please upload a valid image file.");
+      return;
+    }
+
+    // Create an image URL for the uploaded file and set it in state for preview
+    setImageUrl(URL.createObjectURL(uploadedFile));
+    setFile(uploadedFile);
   };
 
   const handleSubmit = async () => {
+    if (!file) {
+      alert("Please upload a file before submitting!");
+      return;
+    }
+
+    setLoading(true); // Set loading state when the file is being submitted
     const formData = new FormData();
     formData.append("file", file);
 
-    // Replace 'localhost:8000' with the endpoint once deployed
-    const response = await fetch("http://localhost:8000/predict", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await response.json();
-    setPrediction(data.predicted_year);
+    try {
+      const response = await fetch("http://localhost:8000/predict", {
+        method: "POST",
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch prediction");
+      }
+      const data = await response.json();
+      const predictedClass = data.predicted_class;
+      setPrediction(predictedClass); // Set the predicted class label
+    } catch (error) {
+      alert("Error: " + error.message);
+    } finally {
+      setLoading(false); // Reset loading state after the request
+    }
   };
 
   return (
@@ -65,10 +90,13 @@ function App() {
       <h1>DecAide: The Virtual Fashion Historian</h1>
       <p><i>This tool is for celebrity stylists who need an efficient way to understand historical fashion references to style their clients 
       using clothing featured on high fashion runways.</i></p>
-      <br></br>
+      <br />
       <h3>Upload an image here:</h3>
       <input type="file" onChange={handleFileChange} />
-      <button onClick={handleSubmit}>Predict Year</button>
+      {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: '300px', marginTop: '20px' }} />}
+      <button onClick={handleSubmit} disabled={loading}>
+        {loading ? 'Predicting...' : 'Predict Year'}
+      </button>
       {prediction && <h2>Predicted Year: {prediction}</h2>}
     </div>
   );

@@ -30,48 +30,52 @@
 /* Keyframes for vertical pan effect for each image */
 @keyframes panVertical0 {
   0% {
-    background-position-y: top; /* Start at the top */
+    background-position: top center; /* Start at the top */
   }
   100% {
-    background-position-y: bottom; /* Move to the bottom */
+    background-position: bottom center; /* Move to the bottom */
   }
 }
 
 @keyframes panVertical1 {
   0% {
-    background-position-y: top; /* Start at the top */
+    background-position: top center; /* Start at the top */
   }
   100% {
-    background-position-y: bottom; /* Move to the bottom */
+    background-position: bottom center; /* Move to the bottom */
   }
 }
+
 
 @keyframes panVertical2 {
   0% {
-    background-position-y: top; /* Start at the top */
+    background-position: top center; /* Start at the top */
   }
   100% {
-    background-position-y: bottom; /* Move to the bottom */
+    background-position: bottom center; /* Move to the bottom */
   }
 }
+
 
 @keyframes panVertical3 {
   0% {
-    background-position-y: top; /* Start at the top */
+    background-position: top center; /* Start at the top */
   }
   100% {
-    background-position-y: bottom; /* Move to the bottom */
+    background-position: bottom center; /* Move to the bottom */
   }
 }
 
+
 @keyframes panVertical4 {
   0% {
-    background-position-y: top; /* Start at the top */
+    background-position: top center; /* Start at the top */
   }
   100% {
-    background-position-y: bottom; /* Move to the bottom */
+    background-position: bottom center; /* Move to the bottom */
   }
 }
+
 
 
 
