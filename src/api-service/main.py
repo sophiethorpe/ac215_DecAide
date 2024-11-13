@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import JSONResponse
 import tensorflow as tf
 from PIL import Image
@@ -62,11 +62,23 @@ def load_label_encoder():
         return None
 
 def preprocess_image(image: Image.Image):
-    # Preprocess the image for the model here
-    image = image.convert("RGB") # Ensure the image is RGB
-    image = image.resize((224, 224))  # Resize to match model input shape if needed
-    image = np.array(image) / 255.0  # Normalize pixel values
-    image = np.expand_dims(image, axis=0)  # Add batch dimension
+    # Convert to RGB
+    image = image.convert("RGB")
+    
+    # Convert the image to a TensorFlow tensor
+    image = tf.convert_to_tensor(np.array(image), dtype=tf.float32)
+    
+    # Resize the image to match model input size (224x224)
+    image = tf.image.resize(image, (224, 224))
+    
+    # Normalize using the mean and std for ImageNet
+    mean = tf.constant([0.485, 0.456, 0.406])
+    std = tf.constant([0.229, 0.224, 0.225])
+    image = (image - mean) / std  # Normalize the image
+
+    # Add batch dimension
+    image = tf.expand_dims(image, axis=0)
+    
     return image
 
 @app.post("/predict")
@@ -111,6 +123,7 @@ async def predict(file: UploadFile = File(...)):
         logging.debug(f"Predicted label: {predicted_label}")
 
         return JSONResponse(content={"predicted_class": str(predicted_label)})
+
     
     except Exception as e:
         logging.error(f"Error during prediction: {e}")
