@@ -38,8 +38,10 @@ function App() {
   };
 
   const [file, setFile] = useState(null);
-  const [prediction, setPrediction] = useState(null);
-  const [loading, setLoading] = useState(false); // Loading state to handle API call
+  const [predictedYear, setPredictedYear] = useState(null);
+  const [generatedCaption, setGeneratedCaption] = useState(null);
+  const [loadingYear, setLoadingYear] = useState(false);
+  const [loadingCaption, setLoadingCaption] = useState(false);
   const [imageUrl, setImageUrl] = useState(null); // State to hold image URL for preview
 
   const handleFileChange = (e) => {
@@ -60,7 +62,8 @@ function App() {
       return;
     }
 
-    setLoading(true); // Set loading state when the file is being submitted
+    setLoadingYear(true); // Set loading state when the file is being submitted
+    setPredictedYear(null); // Clear the previous prediction
     const formData = new FormData();
     formData.append("file", file);
 
@@ -75,32 +78,99 @@ function App() {
       }
       const data = await response.json();
       const predictedClass = data.predicted_class;
-      setPrediction(predictedClass); // Set the predicted class label
+      setPredictedYear(predictedClass); // Set the predicted class label
     } catch (error) {
       alert("Error: " + error.message);
     } finally {
-      setLoading(false); // Reset loading state after the request
+      setLoadingYear(false); // Reset loading state after the request
     }
   };
 
-  return (
-    <div className="App">
-      {/* Background container */}
-      <div className="background-container" style={backgroundStyle}></div>
-      <h1>DecAide: The Virtual Fashion Historian</h1>
-      <p><i>This tool is for celebrity stylists who need an efficient way to understand historical fashion references to style their clients 
-      using clothing featured on high fashion runways.</i></p>
-      <br />
-      <h3>Upload an image here:</h3>
-      <p><small>Supported file types: .jpg, .jpeg, .png, .webp</small></p>
-      <input type="file" onChange={handleFileChange} />
-      {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: '300px', marginTop: '20px' }} />}
-      <button onClick={handleSubmit} disabled={loading}>
-        {loading ? 'Predicting...' : 'Predict Year'}
-      </button>
-      {prediction && <h2>Predicted Year: {prediction}</h2>}
+  const handleCaptionSubmit = async () => {
+    if (!file) {
+      alert("Please upload a file before submitting!");
+      return;
+    }
+
+    setLoadingCaption(true); // Set loading state when the file is being submitted
+    setGeneratedCaption(null); // Clear the previous caption
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("http://localhost:8000/generate-caption", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate caption");
+      }
+      const data = await response.json();
+      const caption = data.caption;
+      setGeneratedCaption(caption); // Set the generated caption
+    } catch (error) {
+      alert("Error: " + error.message);
+    } finally {
+      setLoadingCaption(false); // Reset loading state after the request
+    }
+};
+
+
+return (
+  <div className="App">
+    {/* Background container */}
+    <div className="background-container" style={backgroundStyle}></div>
+    <div className="banner">
+  <h1>DecAide: The Virtual Fashion Historian</h1>
+  <p><i>This tool is for celebrity stylists who need an efficient way to understand historical fashion references to style their clients 
+  using clothing featured on high fashion runways.</i></p>
+  </div>
+    <br />
+    
+    <div className="content-container">
+      {/* Left column: Predicted Year and Caption */}
+      <div className="left-column">
+      <h3>1. Upload an image here:</h3>
+        <p><small>Supported file types: .jpg, .jpeg, .png, .webp</small></p>
+        {/* Custom file upload button */}
+    <label htmlFor="file-upload" className="action-button">
+      Choose File
+    </label>
+    <input
+      id="file-upload"
+      type="file"
+      onChange={handleFileChange}
+      style={{ display: 'none' }} // Hide the default input
+    />
+        <div className="image-container">
+        {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: 'auto', height: '400px', maxWidth: '400px' }} />}
     </div>
-  );
+        
+      </div>
+      
+      {/* Right column: Display uploaded image */}
+<div className="right-column">
+  <div className="section">
+    <h3>2. Predict the year:</h3>
+    <button onClick={handleSubmit} disabled={loadingYear} className="action-button">
+      {loadingYear ? 'Predicting...' : 'Predict Year'}
+    </button>
+    {predictedYear && <h2 className="result">{`${predictedYear}`}</h2>}
+  </div>
+
+  <div className="section">
+    <h3>3. Generate a caption:</h3>
+    <button onClick={handleCaptionSubmit} disabled={loadingCaption} className="action-button">
+      {loadingCaption ? 'Generating Caption...' : 'Generate Caption'}
+    </button>
+    {generatedCaption && <p className="result">{`${generatedCaption}`}</p>}
+  </div>
+</div>
+    </div>
+  </div>
+);
+
 }
 
 export default App;

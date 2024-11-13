@@ -12,7 +12,7 @@ COPY best_model.h5.keras label_encoder.pkl /app
 
 # Update pip and install dependencies (FastAPI, Uvicorn, TensorFlow, etc.)
 RUN pip install --upgrade pip && \
-    pip install tensorflow==2.18.0 fastapi uvicorn numpy pillow six grpcio h5py packaging opt_einsum wheel requests python-multipart joblib scikit-learn
+    pip install tensorflow==2.18.0 fastapi uvicorn numpy pillow six grpcio h5py packaging opt_einsum wheel requests python-multipart joblib scikit-learn transformers torch
 
 # Install system dependencies for ARM64 architecture (for M3 chip compatibility) 
 RUN apt update && apt install -y \

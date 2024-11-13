@@ -110,3 +110,117 @@
   background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity here */
   z-index: -1; /* Ensure overlay is behind content */
 }
+
+/* Two-column layout styles */
+.content-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 20px auto; /* Center the content container */
+}
+
+.left-column {
+  flex: 1.5;
+  padding: 20px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: transparent;
+  text-align: left;
+}
+
+.right-column {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-color: transparent;
+  gap: 30px;
+  flex-direction: column;  /* Stack sections vertically */
+  align-items: flex-start;  /* Align to the left for better spacing */
+}
+
+.section {
+  padding: 10px;  /* Add padding for a better look */
+  border-radius: 8px;  /* Optional: round corners */
+  background-color: transparent;  /* Semi-transparent background */
+  width: 100%;  /* Ensure each section takes full width */
+}
+
+.action-button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.action-button:disabled {
+  background-color: #aaa;
+}
+
+/* Image container for better control */
+.image-container {
+  margin-top: 20px; /* Space between the button and the image */
+}
+
+/* Font for action buttons */
+.action-button {
+  font-family: 'Ostrich Sans', sans-serif; /* Change this to your desired font */
+  font-weight: 300; /* Light font weight */
+  font-size: 16px; /* Adjust size as needed */
+  padding: 10px 20px; /* Optional: adjust the padding for better button appearance */
+  cursor: pointer; /* Makes the button clickable */
+  border: none; /* Optional: remove default border */
+  background-color: rgba(166, 14, 72, 0.7); /* Optional: change background color */
+  color: white; /* Optional: change text color */
+  border-radius: 5px; /* Optional: rounded corners */
+  transition: background-color 0.3s; /* Optional: smooth background color transition on hover */
+}
+
+.action-button:hover {
+  background-color: rgb(166, 14, 72); /* Optional: change background color on hover */
+}
+
+h1, h2, h4, p {
+  position: relative;
+  z-index: 3; /* Ensure text is on top of background */
+  font-family: 'Ostrich Sans', sans-serif;
+  font-weight: 300; /* Light font weight */
+}
+
+h3 {
+  position: relative;
+  z-index: 3; /* Ensure text is on top of background */
+  font-family: 'Ostrich Sans', sans-serif;
+  font-weight: 400; /* Regular font weight */
+}
+
+
+
+body {
+  margin: 0;
+  font-family: 'Ostrich Sans', sans-serif;
+  font-weight: 400; /* Regular font weight */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+.banner {
+  background-color: rgba(183, 11, 83, 0.7); /* Dark red/pink background */
+  color: white;  /* White text */
+  padding: 20px;  /* Space inside the banner */
+  text-align: center;  /* Center-align the text */
+  position: relative;
+  top: 0;
+  width: 100%;
+  font-family: 'Ostrich Sans', sans-serif;
+  font-weight: 300; /* Light font weight */
+}

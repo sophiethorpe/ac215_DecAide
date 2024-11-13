@@ -7,6 +7,7 @@ import io
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 import joblib
+from transformers import BlipProcessor, BlipForConditionalGeneration
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -22,6 +23,10 @@ app.add_middleware(
 
 # Add logging to see FastAPI startup
 logging.basicConfig(level=logging.DEBUG)
+
+# Initialize the image captioning model (BLIP in this case)
+captioning_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+captioning_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
 @app.on_event("startup")
 async def startup():
@@ -128,3 +133,33 @@ async def predict(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"Error during prediction: {e}")
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+@app.post("/generate-caption")
+async def generate_caption(file: UploadFile = File(...)):
+    logging.debug("Received POST request to /generate-caption")
+    logging.debug(f"File received: {file.filename}")
+
+    # Check if the file is a JPG, PNG, or webp image
+    if not file.filename.lower().endswith(('.jpg', '.jpeg', ".png", ".webp")):
+        raise HTTPException(status_code=400, detail="Invalid file format. Please upload a JPG, JPEG, PNG, or WebP image.")
+    
+    try:
+        # Read the image file
+        contents = await file.read()
+        image = Image.open(io.BytesIO(contents))
+
+        # Preprocess the image for caption generation
+        logging.debug(f"Processing image for caption generation: {file.filename}")
+        inputs = captioning_processor(images=image, return_tensors="pt")
+
+        # Generate caption
+        output = captioning_model.generate(**inputs, max_new_tokens = 100, temperature=0.7, num_beams=5)
+        caption = captioning_processor.decode(output[0], skip_special_tokens=True)
+        logging.debug(f"Generated caption: {caption}")
+
+        return JSONResponse(content={"caption": caption})
+    
+    except Exception as e:
+        logging.error(f"Error during caption generation: {e}")
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+    
