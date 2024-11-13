@@ -92,6 +92,7 @@ function App() {
       using clothing featured on high fashion runways.</i></p>
       <br />
       <h3>Upload an image here:</h3>
+      <p><small>Supported file types: .jpg, .jpeg, .png, .webp</small></p>
       <input type="file" onChange={handleFileChange} />
       {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: '300px', marginTop: '20px' }} />}
       <button onClick={handleSubmit} disabled={loading}>
