@@ -178,14 +178,14 @@
   padding: 10px 20px; /* Optional: adjust the padding for better button appearance */
   cursor: pointer; /* Makes the button clickable */
   border: none; /* Optional: remove default border */
-  background-color: rgba(166, 14, 72, 0.7); /* Optional: change background color */
+  background-color: rgba(252, 148, 130, 0.7); /* Optional: change background color */
   color: white; /* Optional: change text color */
   border-radius: 5px; /* Optional: rounded corners */
   transition: background-color 0.3s; /* Optional: smooth background color transition on hover */
 }
 
 .action-button:hover {
-  background-color: rgb(166, 14, 72); /* Optional: change background color on hover */
+  background-color: rgb(252, 148, 130); /* Optional: change background color on hover */
 }
 
 h1, h2, h4, p {
@@ -214,7 +214,7 @@ body {
 }
 
 .banner {
-  background-color: rgba(183, 11, 83, 0.7); /* Dark red/pink background */
+  background-color: rgba(252, 148, 130, 0.7); /* Dark red/pink background */
   color: white;  /* White text */
   padding: 20px;  /* Space inside the banner */
   text-align: center;  /* Center-align the text */
