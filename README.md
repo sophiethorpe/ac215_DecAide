@@ -9,6 +9,8 @@
 ├── Midterm Presentation
 │   └── Milestone 3 Presentaion_ DecAide (1).pptx
 ├── images
+    └── backend.png
+    └── frontend.jpeg
     └── solution-arch.png
     └── technical-arch.png
 ├── notebooks
