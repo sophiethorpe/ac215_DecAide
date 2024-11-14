@@ -41,7 +41,7 @@ async def shutdown():
 
 @app.get("/")
 async def read_root():
-    logging.debug("Root endpoint hit.")
+    logging.debug("Root endpoint hit. (WEB APP/API READY TO USE!!!)")
     return {"message": "API is running!"}
 
 def load_model():
