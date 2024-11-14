@@ -66,6 +66,14 @@ def load_label_encoder():
         logging.error(f"Error loading label encoder: {str(e)}")
         return None
 
+def standardize_image(image: Image.Image) -> Image.Image:
+    # Convert the image to RGB and re-save it to standardize format and remove metadata
+    image = image.convert("RGB")
+    output = io.BytesIO()
+    image.save(output, format="JPEG")
+    output.seek(0)
+    return Image.open(output)
+
 def preprocess_image(image: Image.Image):
     # Convert to RGB
     image = image.convert("RGB")
@@ -91,10 +99,6 @@ async def predict(file: UploadFile = File(...)):
     logging.debug("Received POST request to /predict")
     logging.debug(f"File received: {file.filename}")
 
-    # Check if the file is a JPG, PNG, or webp image
-    if not file.filename.lower().endswith(('.jpg', '.jpeg', ".png", ".webp")):
-        raise HTTPException(status_code=400, detail="Invalid file format. Please upload a JPG, JPEG, PNG, or WebP image.")
-    
     if model is None:
         return JSONResponse(content={"error": "Model could not be loaded."}, status_code=500)
     
@@ -104,12 +108,13 @@ async def predict(file: UploadFile = File(...)):
     try:
         # Read the image file
         contents = await file.read()
-        image = Image.open(io.BytesIO(contents))
+        image = Image.open(io.BytesIO(contents)) # Load the image
+        image = standardize_image(image) # Standardize image to strip metadata
 
         # Ensure it's a JPG, PNG, or WEBP image before proceeding (even if the extension is correct)
         if image.format not in ['JPEG', 'JPG', "PNG", "WEBP"]:
             raise HTTPException(status_code=400, detail="Invalid image format. Please upload a valid JPG, PNG, or WEBP image.")
-        
+
         # Preprocess the image
         logging.debug(f"Processing image: {file.filename}")
         processed_image = preprocess_image(image)
@@ -138,15 +143,16 @@ async def predict(file: UploadFile = File(...)):
 async def generate_caption(file: UploadFile = File(...)):
     logging.debug("Received POST request to /generate-caption")
     logging.debug(f"File received: {file.filename}")
-
-    # Check if the file is a JPG, PNG, or webp image
-    if not file.filename.lower().endswith(('.jpg', '.jpeg', ".png", ".webp")):
-        raise HTTPException(status_code=400, detail="Invalid file format. Please upload a JPG, JPEG, PNG, or WebP image.")
     
     try:
         # Read the image file
         contents = await file.read()
-        image = Image.open(io.BytesIO(contents))
+        image = Image.open(io.BytesIO(contents)) # Load the image
+        image = standardize_image(image) # Standardize image to strip metadata
+
+        # Check if the file is a JPG, PNG, or webp image
+        if not file.filename.lower().endswith(('.jpg', '.jpeg', ".png", ".webp")):
+            raise HTTPException(status_code=400, detail="Invalid file format. Please upload a JPG, JPEG, PNG, or WebP image.")
 
         # Preprocess the image for caption generation
         logging.debug(f"Processing image for caption generation: {file.filename}")

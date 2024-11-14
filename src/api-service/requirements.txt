@@ -1,0 +1,17 @@
+tensorflow==2.18.0
+fastapi
+uvicorn
+numpy
+pillow
+six
+grpcio
+h5py
+packaging
+opt_einsum
+wheel
+requests
+python-multipart
+joblib
+scikit-learn
+transformers
+torch
