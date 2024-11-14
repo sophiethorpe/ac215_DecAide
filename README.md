@@ -122,6 +122,23 @@ We built a React app to identify the year and other related information for a fa
 
 ![](images/frontend.jpeg)
 
+### Steps for running the web app locally
+
+1. Start the API
+    + Open a new Terminal window -> go to the ac215_DecAide repo in your computer
+    + `cd src`
+    + `cd api-service`
+    + `./docker-shell.sh`
+    + The container and image take ~2-3 minutes to build -> you must wait until you see **"DEBUG:root:Root endpoint hit. (WEB APP/API READY TO USE!!!)"** at the end of your logs in the terminal. There may be some pauses in the logs that are generated, but you must wait until the above statement is printed otherwise the API won't be ready to use.
+2. Start the React web app
+    + Open a new Terminal window -> go to the ac215_DecAide repo in your computer
+    + `cd src`
+    + `cd frontend`
+    + `cd image-year-predictor`
+    + `cd src`
+    + `npm start`
+    + The React web app will launch in a new Chrome browser window! You may need to install some dependencies related to React before `npm start` can be run (Node.js and `npm install`).
+
 ## **Milestone3**
 
 In this milestone, we have the components for data management, including versioning, and the computer vision model.  
