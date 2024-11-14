@@ -28,6 +28,7 @@
     │   ├── docker-shell.sh
     │   ├── label_encoder.pkl
     │   ├── main.py
+    │   ├── requirements.txt
     ├── datapipeline
     │   ├── data_versioning
     │   │   ├── Dockerfile
@@ -48,7 +49,12 @@
     │       └── scraping_urls.ipynb
     ├──frontend/image-year-predictor
     │   ├──public
-    │   |   ├──favicon.ico
+    │   |    ├──background1.jpg
+    │   |    ├──background2.jpg
+    │   |    ├──background3.jpg
+    │   |    ├──background4.jpg
+    │   |    ├──background5.jpg
+    │   |    ├──favicon.ico
     │   |    ├──index.html
     │   |    ├──logo192.png
     |   |    ├──logo512.png
