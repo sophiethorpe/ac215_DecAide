@@ -86,7 +86,7 @@ jobs:
       run: |
         source venv/bin/activate
         pytest --cov=src --cov-fail-under=50 --cov-report=term-missing tests/  # Run tests and display coverage in the terminal
-      continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
+      continue-on-error: true 
       env:
         CI: true
 
@@ -101,6 +101,7 @@ jobs:
           exit 1
         fi
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
+      working-directory: src/frontend/image-year-predictor
       env:
         CI: true
 
@@ -114,3 +115,4 @@ jobs:
           exit 1
         fi
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
+      working-directory: src/frontend/image-year-predictor
