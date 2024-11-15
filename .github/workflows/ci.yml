@@ -40,7 +40,9 @@ jobs:
 
     # Step 4: Install dependencies for JavaScript
     - name: Install dependencies for JavaScript
-      run: npm install
+      run: |
+        npm install
+        npm install --save-dev @babel/plugin-proposal-private-property-in-object  # Install missing Babel plugin
       working-directory: src/frontend/image-year-predictor
 
     # Step 5: Run ESLint for JavaScript linting
@@ -90,7 +92,7 @@ jobs:
 
     # Step 11: Run Unit, Integration, and System Tests for JavaScript with Coverage
     - name: Run JavaScript Tests with Coverage
-      run: npm run test -- --coverage --watchAll=false  # Ensure test coverage and no interactive watch mode
+      run: npm run test -- --coverage --watchAll=false --detectOpenHandles  # Add --detectOpenHandles for async issue troubleshooting
       working-directory: src/frontend/image-year-predictor
       env:
         CI: true
