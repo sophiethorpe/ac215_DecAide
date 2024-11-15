@@ -78,11 +78,9 @@ jobs:
         flake8 .
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
 
-    # Step 9: Automated Testing (Placeholder)
+    # Step 9: Automated Testing
     - name: Run Unit, Integration, and System Tests
       run: |
-        echo "No tests written yet, but this is where the test execution will be triggered."
-        # Example command when tests are ready:
-        # npm test
-        # pytest tests/
+        npm test
+        pytest tests/
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
