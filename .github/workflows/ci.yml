@@ -1,4 +1,4 @@
-name: CI - Build and Lint
+name: CI - Build, Lint, and Test with Coverage
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step 2: Set up Node.js for ESLint (for JavaScript projects)
+    # Step 2: Set up Node.js for ESLint and JavaScript testing
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
@@ -41,15 +41,15 @@ jobs:
     # Step 4: Install dependencies for JavaScript
     - name: Install dependencies for JavaScript
       run: npm install
-      working-directory: src/frontend/image-year-predictor  # Set correct directory for npm install
+      working-directory: src/frontend/image-year-predictor
 
     # Step 5: Run ESLint for JavaScript linting
     - name: Run ESLint
       run: npm run lint
-      working-directory: src/frontend/image-year-predictor  # Set correct directory for ESLint
+      working-directory: src/frontend/image-year-predictor
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
 
-    # Step 6: Set up Python for Flake8 (for Python projects)
+    # Step 6: Set up Python for Flake8 and Testing
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -69,7 +69,8 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
-        pip install flake8
+        pip install -r requirements.txt
+        pip install flake8 pytest pytest-cov
 
     # Step 9: Run Flake8 for Python linting
     - name: Run Flake8
@@ -78,13 +79,29 @@ jobs:
         flake8 .
       continue-on-error: true
 
-    # Step 10: Run Unit, Integration, and System Tests for Python
-    - name: Run Python Tests
-      run: pytest tests/  # Run Python tests from the root directory
+    # Step 10: Run Unit, Integration, and System Tests for Python with Coverage
+    - name: Run Python Tests with Coverage
+      run: |
+        source venv/bin/activate
+        pytest --cov=src --cov-fail-under=50 tests/  # Run tests and ensure at least 50% coverage
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
+      env:
+        CI: true
 
-    # Step 11: Run Unit, Integration, and System Tests for JavaScript
-    - name: Run JavaScript Tests
-      run: npm test  # Run npm tests
-      working-directory: src/frontend/image-year-predictor  # Set correct directory for npm test
+    # Step 11: Run Unit, Integration, and System Tests for JavaScript with Coverage
+    - name: Run JavaScript Tests with Coverage
+      run: npm run test -- --coverage --watchAll=false  # Ensure test coverage and no interactive watch mode
+      working-directory: src/frontend/image-year-predictor
+      env:
+        CI: true
+
+    # Step 12: Ensure JavaScript coverage is at least 50%
+    - name: Check JavaScript Coverage
+      run: |
+        COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
+        if (( $(echo "$COVERAGE < 50" | bc -l) )); then
+          echo "Code coverage is below 50%!"
+          exit 1
+        fi
+      working-directory: src/frontend/image-year-predictor
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
