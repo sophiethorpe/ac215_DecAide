@@ -1,0 +1,58 @@
+name: CI - Build and Lint
+
+# Run the workflow on pushes and pull requests
+on:
+  push:
+    branches:
+      - main
+      - milestone2
+      - milestone3
+      - milestone4
+  pull_request:
+    branches:
+      - main
+      - milestone2
+      - milestone3
+      - milestone4
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js for ESLint (for JavaScript projects)
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'  # Specify your Node.js version
+
+    - name: Install dependencies for JavaScript
+      run: npm install
+
+    # Step 3: Run ESLint for JavaScript linting
+    - name: Run ESLint
+      run: npm run lint
+      continue-on-error: true  # This prevents failing immediately and lets you check all errors
+      
+    # Step 4: Set up Python for Flake8 (for Python projects)
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'  # Specify your Python version
+
+    - name: Install dependencies for Python
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install flake8
+
+    # Step 5: Run Flake8 for Python linting
+    - name: Run Flake8
+      run: |
+        source venv/bin/activate
+        flake8 .
+      continue-on-error: true  # This prevents the job from failing immediately
