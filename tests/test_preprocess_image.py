@@ -1,5 +1,5 @@
 import unittest
-from src.frontend.image-year-predictor import preprocess_image  # adjust the import path to your function
+from src.api_service.main import preprocess_image  # Adjusted the import path to match your structure
 
 class TestPreprocessImage(unittest.TestCase):
 
@@ -14,4 +14,3 @@ class TestPreprocessImage(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

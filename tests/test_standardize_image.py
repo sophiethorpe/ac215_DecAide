@@ -1,5 +1,5 @@
 import unittest
-from src.frontend.image-year-predictor import standardize_image  # adjust the import path to your function
+from src.api_service.main import standardize_image  # Adjusted the import path to match your structure
 
 class TestStandardizeImage(unittest.TestCase):
 
@@ -15,4 +15,3 @@ class TestStandardizeImage(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from io import BytesIO
-from app import app  # Assuming your Flask app is in app.py
+from src.api_service.main import app  # Assuming your Flask app is in src/api_service/main.py
 
 class TestGenerateCaptionEndpoint(unittest.TestCase):
 
@@ -10,10 +10,10 @@ class TestGenerateCaptionEndpoint(unittest.TestCase):
         self.app = app.test_client()
         self.app.testing = True
 
-    @patch('src.frontend.image-year-predictor.load_model')  # Mock model loading
-    @patch('src.frontend.image-year-predictor.preprocess_image')  # Mock preprocessing function
-    @patch('src.frontend.image-year-predictor.standardize_image')  # Mock image standardization
-    @patch('src.frontend.image-year-predictor.generate_caption')  # Mock caption generation (LLM call)
+    @patch('src.api_service.main.load_model')  # Mock model loading
+    @patch('src.api_service.main.preprocess_image')  # Mock preprocessing function
+    @patch('src.api_service.main.standardize_image')  # Mock image standardization
+    @patch('src.api_service.main.generate_caption')  # Mock caption generation (LLM call)
     def test_generate_caption_endpoint(self, mock_generate_caption, mock_standardize_image, mock_preprocess_image, mock_load_model):
         # Mock responses
         mock_generate_caption.return_value = "A beautiful landscape of mountains during sunset."  # Mock caption
@@ -37,4 +37,3 @@ class TestGenerateCaptionEndpoint(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

@@ -1,11 +1,11 @@
 import unittest
 from unittest.mock import patch
-from src.frontend.image_year_predictor import load_model  # adjust the import path to your function
+from src.api_service.main import load_model  # Adjusted the import path to match your structure
 
 class TestLoadModel(unittest.TestCase):
 
     # Mocking the load_model function to return a mock model instead of actually loading the real model
-    @patch('src.frontend.image_year_predictor.load_model')  # Adjust the patch path to match your module structure
+    @patch('src.api_service.main.load_model')  # Adjusted the patch path to match your module structure
     def test_load_model(self, mock_load_model):
         # Define what the mock should return when called
         mock_load_model.return_value = 'Mocked model'

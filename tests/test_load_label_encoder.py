@@ -1,5 +1,5 @@
 import unittest
-from src.frontend.image-year-predictor import load_label_encoder  # adjust the import path to your function
+from src.api_service.main import load_label_encoder  # Adjusted the import path to match your structure
 
 class TestLoadLabelEncoder(unittest.TestCase):
 
@@ -13,4 +13,3 @@ class TestLoadLabelEncoder(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
