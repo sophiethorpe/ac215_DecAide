@@ -263,3 +263,103 @@ For the **updated** model, the cleaned data is loaded from the bucket, converted
 The mock up of the app can be found in `reports/app_mockups/Milestone 2 Mock Up Final.pdf`. Users can upload a runway image of an outfit, and the app will determine the decade it is from, providing similar outfits from that era as additional references. 
 
 The app connects to a Google Colab script that runs a machine learning model, which scrapes relevant fashion data and stores it in Google Cloud. The data processing is managed through a Docker container, so that our app is scalable. The app is designed for efficient fashion era identification, making it a useful tool for stylists.
+
+<br>
+
+### Tests
+
+### README: Testing Overview
+
+This section describes the various tests we have implemented for the project, detailing the functionality they cover, the tools used, and the purpose of each test.
+
+---
+
+#### Code Build and Linting
+
+The automated build process and code quality checks are managed using **GitHub Actions**, ensuring that the project is continuously integrated and maintains a high standard of code quality. The following tools are used in the build process:
+
+- **ESLint**: For linting JavaScript/React code. It helps enforce code style rules and identify potential errors.
+- **Flake8**: For linting Python code, ensuring that the code adheres to PEP8 standards and best practices.
+
+---
+
+#### Automated Testing
+
+The tests are divided into **unit tests**, **integration tests**, and **system tests**, each serving a different purpose in verifying the functionality of the application. 
+
+---
+
+### Unit Tests
+
+Unit tests focus on individual functions, verifying that they perform as expected. Below are the unit tests implemented for the project:
+
+1. **test_standardize_image**  
+   *Tests the `standardize_image` function.*  
+   - **Purpose**: To ensure that images are standardized correctly by removing any metadata (e.g., from iPhones) after loading.
+   - **Tools Used**: **Jest** (for running the test) and **React Testing Library** (for rendering and testing the image processing functions).
+
+2. **test_load_model**  
+   *Tests the function that loads the model weights (Sophie’s CV model).*  
+   - **Purpose**: Verifies that the correct model weights are loaded from the `.h5` file and the model is ready for predictions.
+   - **Tools Used**: **pytest**, **unittest** (for Python), and **mocking** (to avoid actual I/O operations during tests).
+
+3. **test_load_label_encoder**  
+   *Tests the function that loads the label encoder (pkl file).*  
+   - **Purpose**: Ensures that the label encoder is correctly loaded from the `.pkl` file, which is essential for the CV model's classification.
+   - **Tools Used**: **pytest**, **mocking** (to mock the file loading process).
+
+4. **test_preprocess_image**  
+   *Tests the image preprocessing function.*  
+   - **Purpose**: Verifies that the image is preprocessed in the same way as the images used in training Sophie’s CV model (e.g., resizing, normalization).
+   - **Tools Used**: **pytest** and **mocking** (for simulating image preprocessing).
+
+---
+
+### Integration Tests
+
+Integration tests verify that different parts of the system work together as expected. These tests specifically test the integration of the model loading and prediction system via API endpoints:
+
+1. **test_predict_endpoint**  
+   *Tests the `predict` endpoint of the API.*  
+   - **Purpose**: Verifies that the API endpoint correctly integrates image loading, preprocessing, and the model’s prediction logic to predict the year of an image.
+   - **Tools Used**: **pytest**, **requests** (to simulate HTTP requests), and **mocking** (for image-related functions).
+
+2. **test_generate_caption_endpoint**  
+   *Tests the `generate_caption` endpoint of the API.*  
+   - **Purpose**: Verifies that the API endpoint correctly integrates the image loading, preprocessing, and uses the Salesforce LLM to generate a caption for the image.
+   - **Tools Used**: **pytest**, **requests**, and **mocking** (for image-related functions and the LLM).
+
+---
+
+### System Tests
+
+System tests cover the complete user flow from uploading an image to receiving a prediction or caption, ensuring that all components work as expected when combined. These tests include error handling scenarios:
+
+1. **Complete User Flow (Predict and Generate Caption)**  
+   *Test the system with realistic data to simulate the full user interaction, covering both the `predict` and `generate-caption` endpoints.*  
+   - **Purpose**: Simulates a complete use case, starting from image upload, image processing, and API interaction, including both the prediction of the year and generation of the caption.
+   - **Tools Used**: **Jest**, **React Testing Library** (for front-end interaction), **requests**, and **pytest** (for API testing).
+
+2. **Test for Supported Image Formats**  
+   *Test that the system works with realistic image data (jpeg, jpg, png, webp).*  
+   - **Purpose**: Ensures that the system can correctly process a variety of image formats commonly used in web applications.
+   - **Tools Used**: **Jest**, **React Testing Library** (for file upload simulation), and **pytest** (for backend image processing validation).
+
+3. **Error Handling Test (PDF File Upload)**  
+   *Test the error handling by submitting a non-image file (e.g., PDF).*  
+   - **Purpose**: Verifies that the system gracefully handles unsupported file types, like PDFs, by returning the appropriate error message.
+   - **Tools Used**: **Jest**, **React Testing Library** (for testing error states), and **pytest** (for testing API response handling of incorrect file types).
+
+---
+
+### Tools and Libraries Used
+
+- **Jest**: For running unit tests and simulating user interactions in the front-end (React).
+- **React Testing Library**: For testing React components, particularly rendering and simulating user input like file uploads and button clicks.
+- **pytest**: A testing framework for Python that simplifies writing test cases and assertions.
+- **requests**: Used in integration tests for sending HTTP requests to the API endpoints.
+- **mocking**: Mocking libraries such as `unittest.mock` in Python are used to simulate file loading or external dependencies during tests (e.g., mocking image loading and model prediction).
+- **Flake8**: A Python linting tool to ensure code adheres to PEP8 and other Python style guidelines.
+- **ESLint**: A JavaScript linter to catch potential issues and enforce consistent coding style in the front-end code.
+
+---
