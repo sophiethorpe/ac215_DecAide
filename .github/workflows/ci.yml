@@ -93,7 +93,6 @@ jobs:
     # Step 11: Run Unit, Integration, and System Tests for JavaScript with Coverage
     - name: Run JavaScript Tests with Coverage
       run: npm run test -- --coverage --watchAll=false --detectOpenHandles  # Add --detectOpenHandles for async issue troubleshooting
-      working-directory: src/frontend/image-year-predictor
       env:
         CI: true
 
@@ -105,5 +104,4 @@ jobs:
           echo "Code coverage is below 50%!"
           exit 1
         fi
-      working-directory: src/frontend/image-year-predictor
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
