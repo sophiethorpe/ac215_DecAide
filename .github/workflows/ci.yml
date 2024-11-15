@@ -34,26 +34,29 @@ jobs:
     - name: Cache node modules
       uses: actions/cache@v3
       with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        path: src/frontend/image-year-predictor/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('src/frontend/image-year-predictor/**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
 
+    # Step 4: Install dependencies for JavaScript (set working directory to frontend)
     - name: Install dependencies for JavaScript
       run: npm install
+      working-directory: src/frontend/image-year-predictor  # Set correct directory
 
-    # Step 4: Run ESLint for JavaScript linting
+    # Step 5: Run ESLint for JavaScript linting
     - name: Run ESLint
       run: npm run lint
+      working-directory: src/frontend/image-year-predictor  # Set correct directory
       continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
-      
-    # Step 5: Set up Python for Flake8 (for Python projects)
+
+    # Step 6: Set up Python for Flake8 (for Python projects)
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'  # Specify your Python version
 
-    # Step 6: Cache Python dependencies
+    # Step 7: Cache Python dependencies
     - name: Cache Python dependencies
       uses: actions/cache@v3
       with:
@@ -68,7 +71,7 @@ jobs:
         source venv/bin/activate
         pip install flake8
 
-    # Step 7: Run Flake8 for Python linting
+    # Step 8: Run Flake8 for Python linting
     - name: Run Flake8
       run: |
         source venv/bin/activate
