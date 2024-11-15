@@ -266,9 +266,7 @@ The app connects to a Google Colab script that runs a machine learning model, wh
 
 <br>
 
-### Tests
-
-### README: Testing Overview
+## Tests
 
 This section describes the various tests we have implemented for the project, detailing the functionality they cover, the tools used, and the purpose of each test.
 
@@ -361,5 +359,209 @@ System tests cover the complete user flow from uploading an image to receiving a
 - **mocking**: Mocking libraries such as `unittest.mock` in Python are used to simulate file loading or external dependencies during tests (e.g., mocking image loading and model prediction).
 - **Flake8**: A Python linting tool to ensure code adheres to PEP8 and other Python style guidelines.
 - **ESLint**: A JavaScript linter to catch potential issues and enforce consistent coding style in the front-end code.
+
+---
+
+<br>
+
+## Instructions to Run Tests Manually
+
+To replicate the test results locally and run all tests for the project, follow the instructions below. These steps will guide you through setting up the environment, running unit, integration, and system tests, as well as verifying the correct behavior of the API and application.
+
+### Prerequisites
+
+Make sure you have the following tools installed on your machine:
+
+- **Node.js & npm** for front-end tests (React app).
+- **Python 3.x** for back-end tests (Flask/Django API).
+- **pip** for Python package management.
+- **pipenv** (optional, for Python environment management).
+- **Git** to clone the repository.
+- **Docker** (optional, for containerized testing).
+
+If you don't have any of these tools installed, please follow the installation links provided:
+
+- [Node.js](https://nodejs.org/)
+- [Python](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/get-started)
+
+---
+
+### Step 1: Clone the Repository
+
+If you haven't cloned the repository yet, do so by running:
+
+```bash
+git clone <repository_url>
+cd <repository_name>
+```
+
+---
+
+### Step 2: Set Up the Development Environment
+
+#### Front-End (JavaScript/React)
+
+1. **Install Dependencies**:  
+   Install the required dependencies for the React project:
+
+   ```bash
+   npm install
+   ```
+
+2. **Run Linter (ESLint)**:  
+   Ensure the code adheres to style guidelines:
+
+   ```bash
+   npm run lint
+   ```
+
+3. **Run Front-End Unit Tests**:  
+   Execute the front-end unit tests using Jest:
+
+   ```bash
+   npm test
+   ```
+
+   This will automatically run tests for React components and logic, including image loading, preprocessing, and user interaction tests.
+
+#### Back-End (Python)
+
+1. **Create a Virtual Environment** (optional but recommended):
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # For Linux/macOS
+   .\venv\Scripts\activate   # For Windows
+   ```
+
+2. **Install Python Dependencies**:  
+   Install the required dependencies by running:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   Alternatively, if using `pipenv`:
+
+   ```bash
+   pipenv install
+   ```
+
+3. **Run Linter (Flake8)**:  
+   Check Python code for style and syntax issues:
+
+   ```bash
+   flake8 .
+   ```
+
+4. **Run Unit Tests**:  
+   Run individual unit tests for Python functions using `pytest`:
+
+   ```bash
+   pytest tests/test_standardize_image.py
+   pytest tests/test_load_model.py
+   pytest tests/test_load_label_encoder.py
+   pytest tests/test_preprocess_image.py
+   ```
+
+   To run all tests:
+
+   ```bash
+   pytest tests/
+   ```
+
+---
+
+### Step 3: Run Integration Tests
+
+Integration tests validate that the system components work together. They include testing the API's behavior, such as predicting image categories and generating captions.
+
+1. **Run API Integration Tests**:
+
+   - **Predict Endpoint**:  
+     Test the image prediction endpoint:
+
+     ```bash
+     pytest tests/test_predict_endpoint.py
+     ```
+
+   - **Generate Caption Endpoint**:  
+     Test the caption generation endpoint:
+
+     ```bash
+     pytest tests/test_generate_caption_endpoint.py
+     ```
+
+2. **Test Error Handling**:  
+   Ensure the system gracefully handles incorrect file types (e.g., PDF instead of image):
+
+   ```bash
+   pytest tests/test_error_handling.py
+   ```
+
+---
+
+### Step 4: Run System Tests
+
+System tests ensure that the API behaves correctly from start to finish for a full user interaction.
+
+1. **Run Full User Flow Test**:  
+   Simulate a real user interacting with the system by testing both the `predict` and `generate-caption` endpoints using realistic image data (e.g., jpeg, png, webp):
+
+   ```bash
+   pytest tests/test_system_flow.py
+   ```
+
+2. **Test Unsupported File Upload (PDF)**:  
+   Check that the API handles unsupported file formats like PDFs:
+
+   ```bash
+   pytest tests/test_system_flow.py --file-type pdf
+   ```
+
+---
+
+### Step 5: Docker (Optional)
+
+For containerized testing, you can run the tests within a Docker container to ensure consistency across environments.
+
+1. **Build Docker Image**:  
+   If the Docker image hasn't been built yet, run:
+
+   ```bash
+   docker build -t <your_image_name> .
+   ```
+
+2. **Run Tests in Docker Container**:  
+   To run the tests inside the container, execute:
+
+   ```bash
+   docker run --rm <your_image_name> pytest tests/
+   ```
+
+---
+
+### Step 6: Review Test Results
+
+After executing the tests, review the output in the terminal. If all tests pass, you'll see a confirmation message. If any tests fail, the error message will indicate the failing test and provide debugging information.
+
+---
+
+### Troubleshooting
+
+- **Missing Dependencies**:  
+  If you get an error about missing dependencies, run `npm install` for front-end dependencies and `pip install -r requirements.txt` for back-end dependencies.
+
+- **Test Failures**:  
+  Review the error messages for details. Most errors will indicate if it’s an issue with the test setup or the application code itself.
+
+- **Docker Issues**:  
+  If you're using Docker and encountering issues, make sure Docker is installed and running by executing `docker ps` to check the container status.
+
+---
+
+By following these steps, you can run tests manually to verify the correctness and reliability of the system. If you encounter any issues, check the specific test file or consult with the development team for further troubleshooting.
 
 ---
