@@ -5,78 +5,90 @@
 
 ```
 .
-├── README.md
 ├── Midterm Presentation
-│   └── Milestone 3 Presentaion_ DecAide (1).pptx
+│   └── Milestone 3 Presentaion_ DecAide (1).pptx
+├── README.md
 ├── images
-    └── backend.png
-    └── frontend.jpeg
-    └── solution-arch.png
-    └── technical-arch.png
+│   ├── backend.png
+│   ├── frontend.jpeg
+│   ├── solution-arch.png
+│   └── technical-arch.png
 ├── notebooks
-│   └── eda_initial_models_ac215.ipynb
+│   └── eda_initial_models_ac215.ipynb
 ├── references
-│   └── Milestone 3_ Draft .docx
+│   └── Milestone 3_ Draft .docx
 ├── reports
-│   └── app_mockups
-│       ├── Milestone 2 Mock Up Final.pdf
-│       └── drafts
-│           ├── APCOMP 215 Milestone 2 Mock Up.pdf
-│           └── Milestone 2 Mock Up Backend.pdf
-└── src
-    ├── api-service
-    │   ├── Dockerfile
-    │   ├── best_model.h5.keras
-    │   ├── docker-shell.sh
-    │   ├── label_encoder.pkl
-    │   ├── main.py
-    │   ├── requirements.txt
-    ├── datapipeline
-    │   ├── data_versioning
-    │   │   ├── Dockerfile
-    │   │   ├── Pipfile
-    │   │   ├── Pipfile.lock
-    │   │   ├── decaide_data.dvc
-    │   │   ├── docker-entrypoint.sh
-    │   │   └── docker-shell.sh
-    │   ├── preprocessing
-    │   │   ├── Dockerfile
-    │   │   ├── Pipfile
-    │   │   ├── Pipfile.lock
-    │   │   ├── docker-entrypoint.sh
-    │   │   ├── docker-shell.sh
-    │   │   └── preprocessing.py
-    │   └── scraping
-    │       ├── download_pics.ipynb
-    │       └── scraping_urls.ipynb
-    ├──frontend/image-year-predictor
-    │   ├──public
-    │   |    ├──background1.jpg
-    │   |    ├──background2.jpg
-    │   |    ├──background3.jpg
-    │   |    ├──background4.jpg
-    │   |    ├──background5.jpg
-    │   |    ├──favicon.ico
-    │   |    ├──index.html
-    │   |    ├──logo192.png
-    |   |    ├──logo512.png
-    |   |    ├──manifest.json
-    |   |    ├──robots.txt
-    │   ├─src
-    │   |    ├──App.css
-    │   │    ├──App.js
-    │   │    ├──App.test.js
-    │   │    ├──index.css
-    │   │    ├──index.js
-    │   │    ├──logo.svg
-    │   │    ├──reportWebVitals.js
-    │   │    ├──setupTests.js
-    │   ├─README.md
-    │   ├─package-lock.json
-    │   ├─package.json
-    └── models
-        └── modeling
-            └── updated_models_ac215.ipynb
+│   └── app_mockups
+│       ├── Milestone 2 Mock Up Final.pdf
+│       └── drafts
+│           ├── APCOMP 215 Milestone 2 Mock Up.pdf
+│           └── Milestone 2 Mock Up Backend.pdf
+├── src
+│   ├── api-service
+│   │   ├── Dockerfile
+│   │   ├── best_model.h5.keras
+│   │   ├── docker-shell.sh
+│   │   ├── label_encoder.pkl
+│   │   ├── main.py
+│   │   └── requirements.txt
+│   ├── datapipeline
+│   │   ├── data_versioning
+│   │   │   ├── Dockerfile
+│   │   │   ├── Pipfile
+│   │   │   ├── Pipfile.lock
+│   │   │   ├── decaide_data.dvc
+│   │   │   ├── docker-entrypoint.sh
+│   │   │   └── docker-shell.sh
+│   │   ├── preprocessing
+│   │   │   ├── Dockerfile
+│   │   │   ├── Pipfile
+│   │   │   ├── Pipfile.lock
+│   │   │   ├── docker-entrypoint.sh
+│   │   │   ├── docker-shell.sh
+│   │   │   └── preprocessing.py
+│   │   └── scraping
+│   │       ├── download_pics.ipynb
+│   │       └── scraping_urls.ipynb
+│   ├── frontend
+│   │   └── image-year-predictor
+│   │       ├── README.md
+│   │       ├── package-lock.json
+│   │       ├── package.json
+│   │       ├── public
+│   │       │   ├── background1.jpg
+│   │       │   ├── background2.jpg
+│   │       │   ├── background3.jpg
+│   │       │   ├── background4.jpg
+│   │       │   ├── background5.jpg
+│   │       │   ├── favicon.ico
+│   │       │   ├── index.html
+│   │       │   ├── logo192.png
+│   │       │   ├── logo512.png
+│   │       │   ├── manifest.json
+│   │       │   └── robots.txt
+│   │       └── src
+│   │           ├── App.css
+│   │           ├── App.js
+│   │           ├── index.css
+│   │           ├── index.js
+│   │           ├── logo.svg
+│   │           ├── reportWebVitals.js
+│   │           └── setupTests.js
+│   └── models
+│       └── modeling
+│           └── updated_models_ac215.ipynb
+└── tests
+    ├── App.test.js
+    ├── test_error_handling.py
+    ├── test_generate_caption.py
+    ├── test_generate_caption_endpoint
+    ├── test_load_label_encoder.py
+    ├── test_load_model.py
+    ├── test_predict.py
+    ├── test_predict_endpoint
+    ├── test_preprocess_image.py
+    └── test_standardize_image.py
+
 ```
 # APCOMP 215: DecAide 
 
