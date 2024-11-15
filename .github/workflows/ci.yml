@@ -60,16 +60,16 @@ jobs:
       uses: actions/cache@v3
       with:
         path: venv
-        key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+        key: ${{ runner.os }}-python-${{ hashFiles('**/api-service/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-python-
 
-    # Step 8: Install dependencies for Python
+    # Step 8: Install dependencies for Python (using requirements.txt in api-service folder)
     - name: Install dependencies for Python
       run: |
         python -m venv venv
         source venv/bin/activate
-        pip install -r requirements.txt
+        pip install -r src/api-service/requirements.txt  # Pointing to the correct requirements.txt location
         pip install flake8 pytest pytest-cov
 
     # Step 9: Run Flake8 for Python linting
