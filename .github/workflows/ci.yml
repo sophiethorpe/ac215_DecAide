@@ -30,19 +30,37 @@ jobs:
       with:
         node-version: '16'  # Specify your Node.js version
 
+    # Step 3: Cache node_modules for faster installs
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
     - name: Install dependencies for JavaScript
       run: npm install
 
-    # Step 3: Run ESLint for JavaScript linting
+    # Step 4: Run ESLint for JavaScript linting
     - name: Run ESLint
       run: npm run lint
-      continue-on-error: true  # This prevents failing immediately and lets you check all errors
+      continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
       
-    # Step 4: Set up Python for Flake8 (for Python projects)
+    # Step 5: Set up Python for Flake8 (for Python projects)
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'  # Specify your Python version
+
+    # Step 6: Cache Python dependencies
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: venv
+        key: ${{ runner.os }}-python-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-python-
 
     - name: Install dependencies for Python
       run: |
@@ -50,9 +68,9 @@ jobs:
         source venv/bin/activate
         pip install flake8
 
-    # Step 5: Run Flake8 for Python linting
+    # Step 7: Run Flake8 for Python linting
     - name: Run Flake8
       run: |
         source venv/bin/activate
         flake8 .
-      continue-on-error: true  # This prevents the job from failing immediately
+      continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
