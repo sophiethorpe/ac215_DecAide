@@ -1,0 +1,40 @@
+import unittest
+from unittest.mock import patch, MagicMock
+from io import BytesIO
+from app import app  # Assuming your Flask app is in app.py
+
+class TestGenerateCaptionEndpoint(unittest.TestCase):
+
+    def setUp(self):
+        # Set up the Flask test client
+        self.app = app.test_client()
+        self.app.testing = True
+
+    @patch('src.frontend.image-year-predictor.load_model')  # Mock model loading
+    @patch('src.frontend.image-year-predictor.preprocess_image')  # Mock preprocessing function
+    @patch('src.frontend.image-year-predictor.standardize_image')  # Mock image standardization
+    @patch('src.frontend.image-year-predictor.generate_caption')  # Mock caption generation (LLM call)
+    def test_generate_caption_endpoint(self, mock_generate_caption, mock_standardize_image, mock_preprocess_image, mock_load_model):
+        # Mock responses
+        mock_generate_caption.return_value = "A beautiful landscape of mountains during sunset."  # Mock caption
+        mock_standardize_image.return_value = "standardized_image"
+        mock_preprocess_image.return_value = "preprocessed_image"
+
+        # Simulate a file upload via POST request
+        with open("test_image.jpg", "rb") as img_file:
+            img_bytes = BytesIO(img_file.read())
+            response = self.app.post(
+                '/generate_caption',  # Assuming this is your endpoint URL
+                data={'file': (img_bytes, 'test_image.jpg')},
+                content_type='multipart/form-data'
+            )
+
+        # Check response status and content
+        self.assertEqual(response.status_code, 200)
+        json_data = response.get_json()
+        self.assertIn('caption', json_data)  # Check if the 'caption' key exists in the response
+        self.assertEqual(json_data['caption'], "A beautiful landscape of mountains during sunset.")  # Mocked caption
+
+if __name__ == '__main__':
+    unittest.main()
+
