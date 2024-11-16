@@ -22,7 +22,8 @@ test('renders the file upload input and accepts file selection', async () => {
 
 test('renders the predict year button and responds to click', async () => {
   render(<App />);
-  const predictButton = await screen.findByText(/Predict Year/i);
+  const predictButton = screen.getByText(/Predict Year/i);
+
   expect(predictButton).toBeInTheDocument();
 
   fireEvent.click(predictButton);
@@ -33,7 +34,8 @@ test('renders the predict year button and responds to click', async () => {
 
 test('renders the generate caption button and responds to click', async () => {
   render(<App />);
-  const captionButton = await screen.findByText(/Generate Caption/i);
+  const captionButton = screen.getByText(/Generate Caption/i);
+
   expect(captionButton).toBeInTheDocument();
 
   fireEvent.click(captionButton);
