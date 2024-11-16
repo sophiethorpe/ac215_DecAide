@@ -1,6 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
+beforeAll(() => {
+  window.alert = jest.fn(); // Mock alert
+});
+
 test('renders the banner title and description', async () => {
   render(<App />);
   const titleElement = await screen.findByText(/DecAide: The Virtual Fashion Historian/i);
@@ -22,6 +26,8 @@ test('renders the predict year button and responds to click', async () => {
   expect(predictButton).toBeInTheDocument();
 
   fireEvent.click(predictButton);
+
+  // Verify button is disabled after click
   expect(predictButton).toBeDisabled();
 });
 
@@ -31,5 +37,7 @@ test('renders the generate caption button and responds to click', async () => {
   expect(captionButton).toBeInTheDocument();
 
   fireEvent.click(captionButton);
+
+  // Verify button is disabled after click
   expect(captionButton).toBeDisabled();
 });
