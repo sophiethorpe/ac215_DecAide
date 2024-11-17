@@ -73,7 +73,6 @@ jobs:
         source venv/bin/activate
         pip install -r src/api-service/requirements.txt
         pip install flake8 pytest pytest-cov
-      working-directory: src/api-service
 
     # Step 9: Run Flake8 for Python linting
     - name: Run Flake8
