@@ -94,8 +94,8 @@ jobs:
     - name: Show JavaScript Coverage
       run: |
         npm run test -- --coverage --watchAll=false --detectOpenHandles  # Generate the coverage report
-        if [ -f src/frontend/image-year-predictor/coverage/coverage-summary.json ]; then
-          COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
+        if [ -f src/frontend/image-year-predictor/coverage/coverage-final.json ]; then
+          COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-final.json)
           echo "JavaScript Coverage: $COVERAGE%"
           if (( $(echo "$COVERAGE < 50" | bc -l) )); then
             echo "JavaScript code coverage is below 50%!"
@@ -113,7 +113,7 @@ jobs:
     # Step 12: Verify JavaScript Coverage meets threshold
     - name: Check JavaScript Coverage
       run: |
-        if [ -f src/frontend/image-year-predictor/coverage/coverage-summary.json ]; then
+        if [ -f src/frontend/image-year-predictor/coverage/coverage-final.json ]; then
           COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
           echo "JavaScript Coverage: $COVERAGE%"
           if (( $(echo "$COVERAGE < 50" | bc -l) )); then
