@@ -18,20 +18,26 @@ test('disables the Predict Year button after click', () => {
   render(<App />);
   const predictButton = screen.getByRole('button', { name: /Predict Year/i });
 
+  // Verify the button starts as enabled
+  expect(predictButton).not.toBeDisabled();
+
   // Simulate clicking the Predict Year button
   fireEvent.click(predictButton);
 
   // Assert that the Predict Year button is disabled after the click
-  expect(predictButton).toHaveAttribute('disabled');
+  expect(predictButton).toBeDisabled();
 });
 
 test('disables the Generate Caption button after click', () => {
   render(<App />);
   const captionButton = screen.getByRole('button', { name: /Generate Caption/i });
 
+  // Verify the button starts as enabled
+  expect(captionButton).not.toBeDisabled();
+
   // Simulate clicking the Generate Caption button
   fireEvent.click(captionButton);
 
   // Assert that the Generate Caption button is disabled after the click
-  expect(captionButton).toHaveAttribute('disabled');
+  expect(captionButton).toBeDisabled();
 });
