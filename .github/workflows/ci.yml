@@ -90,29 +90,39 @@ jobs:
       env:
         CI: true
 
-    # Step 11: Show JavaScript Coverage without Running Tests
+    # Step 11: Generate and Display JavaScript Coverage
     - name: Show JavaScript Coverage
       run: |
-        npm run test -- --coverage --watchAll=false --detectOpenHandles  # Just to generate the coverage report
-        COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
-        echo "JavaScript Coverage: $COVERAGE%"
-        if (( $(echo "$COVERAGE < 50" | bc -l) )); then
-          echo "JavaScript code coverage is below 50%!"
+        npm run test -- --coverage --watchAll=false --detectOpenHandles  # Generate the coverage report
+        if [ -f src/frontend/image-year-predictor/coverage/coverage-summary.json ]; then
+          COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
+          echo "JavaScript Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < 50" | bc -l) )); then
+            echo "JavaScript code coverage is below 50%!"
+            exit 1
+          fi
+        else
+          echo "Coverage file not found!"
           exit 1
         fi
-      continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
+      continue-on-error: true  # Optional: allows for checking all errors
       working-directory: src/frontend/image-year-predictor
       env:
         CI: true
 
-    # Step 12: Ensure JavaScript coverage is at least 50%
+    # Step 12: Verify JavaScript Coverage meets threshold
     - name: Check JavaScript Coverage
       run: |
-        COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
-        echo "JavaScript Coverage: $COVERAGE%"
-        if (( $(echo "$COVERAGE < 50" | bc -l) )); then
-          echo "Code coverage is below 50%!"
+        if [ -f src/frontend/image-year-predictor/coverage/coverage-summary.json ]; then
+          COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-summary.json)
+          echo "JavaScript Coverage: $COVERAGE%"
+          if (( $(echo "$COVERAGE < 50" | bc -l) )); then
+            echo "Code coverage is below 50%!"
+            exit 1
+          fi
+        else
+          echo "Coverage file not found!"
           exit 1
         fi
-      continue-on-error: true  # Optional: prevents failing immediately and lets you check all errors
+      continue-on-error: true
       working-directory: src/frontend/image-year-predictor
