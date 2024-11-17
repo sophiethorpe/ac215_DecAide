@@ -90,10 +90,12 @@ jobs:
       env:
         CI: true
 
-    # Step 11: Generate and Display JavaScript Coverage
-    - name: Show JavaScript Coverage
+    # Step 11: Generate and Verify JavaScript Coverage
+    - name: Generate and Verify JavaScript Coverage
+      shell: /usr/bin/bash -e {0}
       run: |
         npm run test -- --coverage --watchAll=false --detectOpenHandles  # Generate the coverage report
+        
         if [ -f src/frontend/image-year-predictor/coverage/coverage-final.json ]; then
           COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-final.json)
           echo "JavaScript Coverage: $COVERAGE%"
@@ -101,20 +103,17 @@ jobs:
           echo "Coverage file not found!"
           exit 1
         fi
-      continue-on-error: true  # Optional: allows for checking all errors
-      working-directory: src/frontend/image-year-predictor/coverage
+        
+        echo "Displaying Directory Structure"
+        tree -I '__pycache__|.cache|*.pyc|*.pyo|*.pyd|*.swp|*.jpg.cache|*.png.cache|*.jpeg.cache|*.webp.cache|node_modules|*.DS_Store|Thumbs.db'
+
+      working-directory: src/frontend/image-year-predictor
       env:
         CI: true
+        pythonLocation: /opt/hostedtoolcache/Python/3.11.10/x64
+        PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.10/x64/lib/pkgconfig
+        Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.10/x64
+        Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.10/x64
+        Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.10/x64
+        LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.10/x64/lib
 
-    # Step 12: Verify JavaScript Coverage meets threshold
-    - name: Check JavaScript Coverage
-      run: |
-        if [ -f src/frontend/image-year-predictor/coverage/coverage-final.json ]; then
-          COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-final.json)
-          echo "JavaScript Coverage: $COVERAGE%"
-        else
-          echo "Coverage file not found!"
-          exit 1
-        fi
-      continue-on-error: true
-      working-directory: src/frontend/image-year-predictor/coverage
