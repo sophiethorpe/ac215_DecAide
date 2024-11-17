@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from io import BytesIO
 from fastapi.testclient import TestClient
-from src.api_service.main import app  # FastAPI app instance
+from ..src.api_service.main import app
 
 class TestGenerateCaptionEndpoint(unittest.TestCase):
 

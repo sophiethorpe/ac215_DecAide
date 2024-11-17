@@ -1,7 +1,7 @@
 import os
 import pytest
 from fastapi.testclient import TestClient
-from src.api_service.main import app  # Assuming this is where your FastAPI app is defined
+from ..src.api_service.main import app  # Assuming this is where your FastAPI app is defined
 
 # Set up the FastAPI TestClient
 client = TestClient(app)

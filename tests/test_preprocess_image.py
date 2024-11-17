@@ -1,5 +1,5 @@
 import unittest
-from src.api_service.main import preprocess_image  # Adjusted the import path to match your structure
+from ..src.api_service.main import preprocess_image  # Adjusted the import path to match your structure
 
 class TestPreprocessImage(unittest.TestCase):
 
