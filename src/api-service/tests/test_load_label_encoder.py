@@ -1,11 +1,19 @@
 import unittest
 import os
 import sys
-# Modify sys.path to include the folder containing api-service
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/api-service')))
+import importlib
+# Specify the path to your main.py file
+module_name = "main"
+file_path = os.path.join(os.path.dirname(__file__), '../../api-service/main.py')  # Adjust the relative path if needed
 
-# Now you can import as normal
-from main import app
+# Dynamically load the module
+spec = importlib.util.spec_from_file_location(module_name, file_path)
+api_service_main = importlib.util.module_from_spec(spec)
+sys.modules[module_name] = api_service_main
+spec.loader.exec_module(api_service_main)
+
+# Now you can access the `app` from `main.py`
+app = api_service_main.app
 
 class TestLoadLabelEncoder(unittest.TestCase):
 
