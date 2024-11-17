@@ -102,7 +102,7 @@ jobs:
           exit 1
         fi
       continue-on-error: true  # Optional: allows for checking all errors
-      working-directory: src/frontend/image-year-predictor
+      working-directory: src/frontend/image-year-predictor/coverage
       env:
         CI: true
 
@@ -117,4 +117,4 @@ jobs:
           exit 1
         fi
       continue-on-error: true
-      working-directory: src/frontend/image-year-predictor
+      working-directory: src/frontend/image-year-predictor/coverage
