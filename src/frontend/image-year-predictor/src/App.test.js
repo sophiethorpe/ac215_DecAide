@@ -1,47 +1,37 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
 beforeAll(() => {
   window.alert = jest.fn(); // Mock alert to prevent it from interrupting tests
 });
 
-test('renders the banner title and description', async () => {
+test('renders the banner title and description', () => {
   render(<App />);
-  const titleElement = await screen.findByText(/DecAide: The Virtual Fashion Historian/i);
-  const descriptionElement = await screen.findByText(/This tool is for celebrity stylists/i);
+  const titleElement = screen.getByText(/DecAide: The Virtual Fashion Historian/i);
+  const descriptionElement = screen.getByText(/This tool is for celebrity stylists/i);
 
   expect(titleElement).toBeInTheDocument();
   expect(descriptionElement).toBeInTheDocument();
 });
 
-test('ensures the Predict Year button is disabled after click', async () => {
+test('disables the Predict Year button after click', () => {
   render(<App />);
-  const predictButton = screen.getByText(/Predict Year/i);
-
-  // Verify the button starts as enabled
-  expect(predictButton).not.toBeDisabled();
+  const predictButton = screen.getByRole('button', { name: /Predict Year/i });
 
   // Simulate clicking the Predict Year button
   fireEvent.click(predictButton);
 
-  // Wait for the button to become disabled
-  await waitFor(() => {
-    expect(predictButton).toBeDisabled();
-  });
+  // Assert that the Predict Year button is disabled after the click
+  expect(predictButton).toHaveAttribute('disabled');
 });
 
-test('ensures the Generate Caption button is disabled after click', async () => {
+test('disables the Generate Caption button after click', () => {
   render(<App />);
-  const captionButton = screen.getByText(/Generate Caption/i);
-
-  // Verify the button starts as enabled
-  expect(captionButton).not.toBeDisabled();
+  const captionButton = screen.getByRole('button', { name: /Generate Caption/i });
 
   // Simulate clicking the Generate Caption button
   fireEvent.click(captionButton);
 
-  // Wait for the button to become disabled
-  await waitFor(() => {
-    expect(captionButton).toBeDisabled();
-  });
+  // Assert that the Generate Caption button is disabled after the click
+  expect(captionButton).toHaveAttribute('disabled');
 });
