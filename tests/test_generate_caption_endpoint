@@ -1,39 +1,41 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from io import BytesIO
-from src.api_service.main import app  # Assuming your Flask app is in src/api_service/main.py
+from fastapi.testclient import TestClient
+from src.api_service.main import app  # FastAPI app instance
 
 class TestGenerateCaptionEndpoint(unittest.TestCase):
 
     def setUp(self):
-        # Set up the Flask test client
-        self.app = app.test_client()
-        self.app.testing = True
+        # Set up the FastAPI test client
+        self.client = TestClient(app)
 
-    @patch('src.api_service.main.load_model')  # Mock model loading
-    @patch('src.api_service.main.preprocess_image')  # Mock preprocessing function
     @patch('src.api_service.main.standardize_image')  # Mock image standardization
-    @patch('src.api_service.main.generate_caption')  # Mock caption generation (LLM call)
-    def test_generate_caption_endpoint(self, mock_generate_caption, mock_standardize_image, mock_preprocess_image, mock_load_model):
-        # Mock responses
-        mock_generate_caption.return_value = "A beautiful landscape of mountains during sunset."  # Mock caption
+    @patch('src.api_service.main.captioning_processor')  # Mock the processor (caption generation)
+    @patch('src.api_service.main.captioning_model')  # Mock the model
+    def test_generate_caption_endpoint(self, mock_captioning_model, mock_captioning_processor, mock_standardize_image):
+        # Mock the processor's behavior (inputs and outputs)
+        mock_processor = MagicMock()
+        mock_captioning_processor.return_value = mock_processor
+        mock_captioning_model.generate.return_value = [[1, 2, 3]]  # Example tokenized output
+        
+        # Mock the standardize_image function
         mock_standardize_image.return_value = "standardized_image"
-        mock_preprocess_image.return_value = "preprocessed_image"
-
+        
         # Simulate a file upload via POST request
         with open("test_image.jpg", "rb") as img_file:
-            img_bytes = BytesIO(img_file.read())
-            response = self.app.post(
-                '/generate_caption',  # Assuming this is your endpoint URL
-                data={'file': (img_bytes, 'test_image.jpg')},
-                content_type='multipart/form-data'
+            img_bytes = BytesIO(img_file.read())  # Convert file into BytesIO to simulate file upload
+            response = self.client.post(
+                '/generate-caption',  # Endpoint URL
+                files={'file': ('test_image.jpg', img_bytes, 'image/jpeg')},
             )
 
-        # Check response status and content
+        # Check the response status and content
         self.assertEqual(response.status_code, 200)
-        json_data = response.get_json()
-        self.assertIn('caption', json_data)  # Check if the 'caption' key exists in the response
-        self.assertEqual(json_data['caption'], "A beautiful landscape of mountains during sunset.")  # Mocked caption
+        json_data = response.json()
+        self.assertIn('caption', json_data)  # Ensure the 'caption' key exists in the response
+        self.assertEqual(json_data['caption'], "A beautiful landscape of mountains during sunset.")  # Check if the caption is mocked correctly
+
 
 if __name__ == '__main__':
     unittest.main()

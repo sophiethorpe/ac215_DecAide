@@ -1,14 +1,16 @@
 import os
 import pytest
-import requests
+from fastapi.testclient import TestClient
+from src.api_service.main import app  # Assuming this is where your FastAPI app is defined
 
-API_URL = "http://localhost:5000"  # Replace with the correct API URL
+# Set up the FastAPI TestClient
+client = TestClient(app)
 
-# Helper function to send a POST request with an image
+# Helper function to simulate file upload without needing a local server
 def upload_invalid_file(file_path):
     with open(file_path, 'rb') as f:
         files = {'file': (os.path.basename(file_path), f, 'multipart/form-data')}
-        response = requests.post(f"{API_URL}/predict", files=files)
+        response = client.post("/predict", files=files)  # Use the FastAPI test client to make the POST request
     return response
 
 def test_upload_pdf():
@@ -35,4 +37,3 @@ def test_upload_empty_file():
     # Check if the error message is appropriate
     assert 'error' in response.json(), "Error key not in response"
     assert response.json()['error'] == "File is empty", "Unexpected error message"
-
