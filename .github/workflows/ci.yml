@@ -48,7 +48,7 @@ jobs:
     # Step 5: Run ESLint for JavaScript linting
     - name: Run ESLint
       run: npm run lint
-      working-directory: src/frontend/image-year-predictor
+      working-directory: src/frontend/image-year-predictor/src
       continue-on-error: true
 
     # Step 6: Set up Python for Flake8 and Testing
