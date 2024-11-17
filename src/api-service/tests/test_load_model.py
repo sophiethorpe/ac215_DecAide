@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from api_service.main import load_model  # Adjusted the import path to match your structure
+from api-service import main  # Adjusted the import path to match your structure
 
 class TestLoadModel(unittest.TestCase):
 

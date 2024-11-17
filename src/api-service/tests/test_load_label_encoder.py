@@ -1,5 +1,5 @@
 import unittest
-from api_service.main import load_label_encoder  # Adjusted the import path to match your structure
+from api-service import main  # Adjusted the import path to match your structure
 
 class TestLoadLabelEncoder(unittest.TestCase):
 
