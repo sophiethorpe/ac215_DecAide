@@ -78,17 +78,16 @@ jobs:
     - name: Run Flake8
       run: |
         source venv/bin/activate
-        flake8 .
-      working-directory: src/api-service
+        flake8 src/api-service
       continue-on-error: true
 
     # Step 10: Run Unit, Integration, and System Tests for Python with Coverage
     - name: Run Python Tests with Coverage
       run: |
         source venv/bin/activate
-        pytest --cov=src --cov-report=term-missing tests/  # Run tests and display coverage in the terminal
+        pytest --cov=src --cov-report=term-missing src/api-service/tests  # Run tests from the tests folder
       continue-on-error: true
-      working-directory: src/api-service
+      working-directory: .
       env:
         CI: true
 
