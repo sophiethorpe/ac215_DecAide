@@ -1,5 +1,11 @@
 import unittest
-from api-service import main  # Adjusted the import path to match your structure
+import sys
+import os
+# Modify sys.path to include the folder containing api-service
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/api-service')))
+
+# Now you can import as normal
+from main import app
 
 class TestPreprocessImage(unittest.TestCase):
 

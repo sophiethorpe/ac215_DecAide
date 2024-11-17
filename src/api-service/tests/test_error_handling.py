@@ -1,7 +1,13 @@
 import os
 import pytest
 from fastapi.testclient import TestClient
-from api-service import main  # Assuming this is where your FastAPI app is defined
+import sys
+import os
+# Modify sys.path to include the folder containing api-service
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../src/api-service')))
+
+# Now you can import as normal
+from main import app
 
 # Set up the FastAPI TestClient
 client = TestClient(app)
