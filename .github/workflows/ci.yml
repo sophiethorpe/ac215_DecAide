@@ -87,6 +87,7 @@ jobs:
         source venv/bin/activate
         pytest --cov=src --cov-report=term-missing tests/  # Run tests and display coverage in the terminal
       continue-on-error: true
+      working-directory: src/api-service
       env:
         CI: true
 
