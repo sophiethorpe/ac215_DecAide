@@ -1,12 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
+beforeAll(() => {
+  window.alert = jest.fn(); // Mock alert
+});
+
 test('renders the banner title and description', async () => {
-  if (!appIsLive) {
-    console.log('Skipping test: App is not live');
-    return;
-  }
-  
   render(<App />);
   const titleElement = await screen.findByText(/DecAide: The Virtual Fashion Historian/i);
   const descriptionElement = await screen.findByText(/This tool is for celebrity stylists/i);
@@ -16,11 +15,6 @@ test('renders the banner title and description', async () => {
 });
 
 test('renders the file upload input and accepts file selection', async () => {
-  if (!appIsLive) {
-    console.log('Skipping test: App is not live');
-    return;
-  }
-  
   render(<App />);
   const fileInput = await screen.findByLabelText(/Choose File/i);
   expect(fileInput).toBeInTheDocument();
