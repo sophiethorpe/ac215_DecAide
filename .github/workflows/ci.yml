@@ -85,8 +85,6 @@ jobs:
     - name: Run Python Tests with Coverage
       run: |
         source venv/bin/activate
-        export PYTHONPATH=$(pwd)/src/api-service:$PYTHONPATH  # Set the PYTHONPATH to include the src folder
-        echo $PYTHONPATH
         pytest --cov=src --cov-report=term-missing tests/  # Run tests and display coverage in the terminal
       continue-on-error: true
       env:
