@@ -2,7 +2,16 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from './App';
 
 beforeAll(() => {
-  window.alert = jest.fn(); // Mock alert
+  window.alert = jest.fn(); // Mock alert to prevent it from interrupting tests
+});
+
+test('renders the banner title and description', async () => {
+  render(<App />);
+  const titleElement = await screen.findByText(/DecAide: The Virtual Fashion Historian/i);
+  const descriptionElement = await screen.findByText(/This tool is for celebrity stylists/i);
+
+  expect(titleElement).toBeInTheDocument();
+  expect(descriptionElement).toBeInTheDocument();
 });
 
 test('ensures the Predict Year button is disabled after click', async () => {
