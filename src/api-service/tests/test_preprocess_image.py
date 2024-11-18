@@ -2,6 +2,16 @@ import unittest
 import sys
 import os
 import importlib
+from PIL import Image  # Make sure Pillow is installed
+
+# Correctly load the image from the file path
+def standardize_image(image_path: str) -> Image.Image:
+    # Open the image file
+    image = Image.open(image_path)
+    
+    # Convert the image to RGB and re-save it to standardize format and remove metadata
+    image = image.convert("RGB")
+    return image
 
 # Dynamically load the main.py module
 module_name = "main"
@@ -20,11 +30,17 @@ class TestPreprocessImage(unittest.TestCase):
             self.fail("Function 'preprocess_image' not found in the module")
 
         # Mock or provide a test image path
-        image_path = 'tests/test_image.jpg'  # Update with an actual test image path or mock the input
+        image_path = 'tests/files/test_image.jpg'  # Update with an actual test image path or mock the input
         
-        # Call the actual function
+        # Use standardize_image to standardize the test image
         try:
-            preprocessed_image = preprocess_image(image_path)
+            standardized_image = standardize_image(image_path)
+        except Exception as e:
+            self.fail(f"standardize_image raised an exception: {e}")
+        
+        # Now use preprocess_image with the standardized image
+        try:
+            preprocessed_image = preprocess_image(standardized_image)
         except Exception as e:
             self.fail(f"preprocess_image raised an exception: {e}")
 
