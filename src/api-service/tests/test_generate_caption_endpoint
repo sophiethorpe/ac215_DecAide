@@ -5,18 +5,22 @@ from unittest.mock import patch, MagicMock
 from io import BytesIO
 from fastapi.testclient import TestClient
 import importlib
-# Specify the path to your main.py file
+
+# Dynamically load the main.py module
 module_name = "main"
 file_path = os.path.join(os.path.dirname(__file__), '../../api-service/main.py')  # Adjust the relative path if needed
-
-# Dynamically load the module
 spec = importlib.util.spec_from_file_location(module_name, file_path)
 api_service_main = importlib.util.module_from_spec(spec)
 sys.modules[module_name] = api_service_main
 spec.loader.exec_module(api_service_main)
 
-# Now you can access the `app` from `main.py`
-app = api_service_main.app
+# Access the FastAPI app from the dynamically imported module
+app = getattr(api_service_main, "app", None)
+if app is None:
+    raise ImportError("Failed to find 'app' in the dynamically imported module")
+
+# Set up the FastAPI TestClient
+client = TestClient(app)
 
 class TestGenerateCaptionEndpoint(unittest.TestCase):
 
@@ -49,7 +53,6 @@ class TestGenerateCaptionEndpoint(unittest.TestCase):
         json_data = response.json()
         self.assertIn('caption', json_data)  # Ensure the 'caption' key exists in the response
         self.assertEqual(json_data['caption'], "A beautiful landscape of mountains during sunset.")  # Check if the caption is mocked correctly
-
 
 if __name__ == '__main__':
     unittest.main()

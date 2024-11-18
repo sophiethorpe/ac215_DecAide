@@ -2,29 +2,36 @@ import unittest
 import sys
 import os
 import importlib
-# Specify the path to your main.py file
+
+# Dynamically load the main.py module
 module_name = "main"
 file_path = os.path.join(os.path.dirname(__file__), '../../api-service/main.py')  # Adjust the relative path if needed
-
-# Dynamically load the module
 spec = importlib.util.spec_from_file_location(module_name, file_path)
 api_service_main = importlib.util.module_from_spec(spec)
 sys.modules[module_name] = api_service_main
 spec.loader.exec_module(api_service_main)
 
-# Now you can access the `app` from `main.py`
-app = api_service_main.app
+# Dynamically access the `preprocess_image` function
+preprocess_image = getattr(api_service_main, 'preprocess_image', None)
 
 class TestPreprocessImage(unittest.TestCase):
-
     def test_preprocess_image(self):
-        image_path = 'tests/test_image.jpg'  # Provide a mock image path or mock the image input
-        preprocessed_image = preprocess_image(image_path)  # Call your actual function to preprocess the image
+        if not preprocess_image:
+            self.fail("Function 'preprocess_image' not found in the module")
+
+        # Mock or provide a test image path
+        image_path = 'tests/test_image.jpg'  # Update with an actual test image path or mock the input
         
+        # Call the actual function
+        try:
+            preprocessed_image = preprocess_image(image_path)
+        except Exception as e:
+            self.fail(f"preprocess_image raised an exception: {e}")
+
         # Assert the image has been preprocessed correctly
-        self.assertIsNotNone(preprocessed_image)
-        self.assertEqual(preprocessed_image.shape, (224, 224, 3))  # Example: checking preprocessed image size
-        # Add more assertions as necessary
+        self.assertIsNotNone(preprocessed_image, "Preprocessed image should not be None")
+        self.assertEqual(preprocessed_image.shape, (224, 224, 3), "Preprocessed image shape is incorrect")
+        # Add additional assertions if necessary (e.g., type checks, value range)
 
 if __name__ == "__main__":
     unittest.main()

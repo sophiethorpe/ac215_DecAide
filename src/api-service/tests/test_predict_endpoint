@@ -4,31 +4,34 @@ from io import BytesIO
 import sys
 import os
 import importlib
-# Specify the path to your main.py file
+
+# Dynamically load the main.py module
 module_name = "main"
 file_path = os.path.join(os.path.dirname(__file__), '../../api-service/main.py')  # Adjust the relative path if needed
-
-# Dynamically load the module
 spec = importlib.util.spec_from_file_location(module_name, file_path)
 api_service_main = importlib.util.module_from_spec(spec)
 sys.modules[module_name] = api_service_main
 spec.loader.exec_module(api_service_main)
 
-# Now you can access the `app` from `main.py`
-app = api_service_main.app
+# Access the FastAPI app from the dynamically imported module
+app = getattr(api_service_main, "app", None)
+if app is None:
+    raise ImportError("Failed to find 'app' in the dynamically imported module")
 
+# Set up the FastAPI TestClient
+client = api_service_main.app.test_client()
 
 class TestPredictEndpoint(unittest.TestCase):
 
     def setUp(self):
-        # Set up the Flask test client
-        self.app = app.test_client()
-        self.app.testing = True
+        # Set up the FastAPI test client
+        self.client = client
+        self.client.testing = True
 
-    @patch('src.frontend.image-year-predictor.load_model')  # Mock model loading
-    @patch('src.frontend.image-year-predictor.preprocess_image')  # Mock preprocessing function
-    @patch('src.frontend.image-year-predictor.standardize_image')  # Mock image standardization
-    @patch('src.frontend.image-year-predictor.load_label_encoder')  # Mock label encoder loading
+    @patch('src.frontend.image_year_predictor.load_model')  # Mock model loading
+    @patch('src.frontend.image_year_predictor.preprocess_image')  # Mock preprocessing function
+    @patch('src.frontend.image_year_predictor.standardize_image')  # Mock image standardization
+    @patch('src.frontend.image_year_predictor.load_label_encoder')  # Mock label encoder loading
     def test_predict_endpoint(self, mock_load_label_encoder, mock_standardize_image, mock_preprocess_image, mock_load_model):
         # Mock responses
         mock_model = MagicMock()
@@ -40,8 +43,8 @@ class TestPredictEndpoint(unittest.TestCase):
 
         # Simulate a file upload via POST request
         with open("test_image.jpg", "rb") as img_file:
-            img_bytes = BytesIO(img_file.read())
-            response = self.app.post(
+            img_bytes = BytesIO(img_file.read())  # Convert file into BytesIO to simulate file upload
+            response = self.client.post(
                 '/predict',  # Assuming this is your endpoint URL
                 data={'file': (img_bytes, 'test_image.jpg')},
                 content_type='multipart/form-data'
@@ -55,4 +58,3 @@ class TestPredictEndpoint(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
