@@ -50,17 +50,17 @@ def test_upload_pdf():
     # Cleanup the test file
     os.remove(pdf_file)
 
-# Test case for uploading an empty file
 def test_upload_empty_file():
     empty_file = "tests/files/empty.jpg"
-    if not os.path.exists(os.path.dirname(empty_file)):
-        os.makedirs(os.path.dirname(empty_file), exist_ok=True)
+    file_dir = os.path.dirname(empty_file)
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir, exist_ok=True)  # Ensure directory exists
     with open(empty_file, 'wb') as f:
         pass  # Create an empty file
 
     response = upload_invalid_file(empty_file)
 
-    # Check if the response status code is 400 for bad request
+    # Check if the response status code is 400 for empty file upload
     assert response.status_code == 400, "Expected 400 status code for empty file upload"
     
     # Check if the error message is appropriate
