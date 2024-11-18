@@ -41,7 +41,7 @@ def upload_file(file_path):
     return response
 
 # Test case for a valid image file prediction
-def test_predict_valid_image():
+def test_predict_valid_image(mock_model_loading):  # Accept the mock model fixture here
     valid_image_file = "tests/files/test-image.jpg"
     file_dir = os.path.dirname(valid_image_file)
     if not os.path.exists(file_dir):
@@ -63,7 +63,7 @@ def test_predict_valid_image():
     os.remove(valid_image_file)
 
 # Test case for uploading a PDF file
-def test_upload_pdf():
+def test_upload_pdf(mock_model_loading):  # Accept the mock model fixture here
     pdf_file = "tests/files/sample.pdf"
     file_dir = os.path.dirname(pdf_file)
     if not os.path.exists(file_dir):
@@ -83,7 +83,7 @@ def test_upload_pdf():
     os.remove(pdf_file)
 
 # Test case for uploading an empty file
-def test_upload_empty_file():
+def test_upload_empty_file(mock_model_loading):  # Accept the mock model fixture here
     empty_file = "tests/files/empty.jpg"
     file_dir = os.path.dirname(empty_file)
     if not os.path.exists(file_dir):
