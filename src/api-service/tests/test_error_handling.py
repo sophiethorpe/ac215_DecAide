@@ -27,7 +27,7 @@ def mock_model_loading():
     with patch("tensorflow.keras.models.load_model") as mock_load_model:
         # Mock the model instance and its predict method
         mock_model_instance = MagicMock()
-        mock_model_instance.predict.return_value = ["Mocked prediction"]  # Return a mock prediction
+        mock_model_instance.predict.return_value = [[0.1, 0.2, 0.7]]  # Example of a mock prediction
         mock_load_model.return_value = mock_model_instance
         yield mock_model_instance  # Provide the mock to tests
 
@@ -47,7 +47,7 @@ def test_predict_valid_image():
     if not os.path.exists(file_dir):
         os.makedirs(file_dir, exist_ok=True)
     
-    # Create a dummy image file
+    # Create a dummy image file (you could also mock image file creation here)
     with open(valid_image_file, 'wb') as f:
         f.write(b"\x89PNG\r\n\x1a\n")  # Write a simple PNG header for testing
     
@@ -56,8 +56,8 @@ def test_predict_valid_image():
     # Assert that the prediction endpoint responds correctly
     assert response.status_code == 200, "Expected 200 status code for valid image upload"
     response_json = response.json()
-    assert 'prediction' in response_json, "Prediction key not in response"
-    assert response_json['prediction'] == ["Mocked prediction"], "Unexpected prediction result"
+    assert 'predicted_class' in response_json, "Predicted class key not in response"
+    assert response_json['predicted_class'] == "Mocked prediction", "Unexpected prediction result"
 
     # Cleanup the test file
     os.remove(valid_image_file)
@@ -77,7 +77,7 @@ def test_upload_pdf():
     assert response.status_code == 400, "Expected 400 status code for PDF upload"
     response_json = response.json()
     assert 'error' in response_json, "Error key not in response"
-    assert response_json['error'] == "Unsupported file type", "Unexpected error message"
+    assert response_json['error'] == "Invalid image format. Please upload a valid JPG, PNG, or WEBP image.", "Unexpected error message"
 
     # Cleanup the test file
     os.remove(pdf_file)

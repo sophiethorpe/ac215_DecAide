@@ -2,6 +2,7 @@ import unittest
 import sys
 import os
 import importlib
+from PIL import Image  # Ensure Pillow is installed
 
 # Dynamically load the main.py module
 module_name = "main"
@@ -19,16 +20,20 @@ class TestStandardizeImage(unittest.TestCase):
         if not standardize_image:
             self.fail("Function 'standardize_image' not found in the module")
 
-        # Mock or provide a test image path
-        image_path = 'tests/files/test_image.jpg'
-        
-        # Call the actual function
-        standardized_image = standardize_image(image_path)
+        # Create a mock image directly (bypassing file dependency)
+        mock_image = Image.new('RGB', (256, 256), color='blue')  # Create a 256x256 RGB image
+
+        # Call the actual function with the mock image
+        try:
+            standardized_image = standardize_image(mock_image)
+        except Exception as e:
+            self.fail(f"standardize_image raised an exception: {e}")
 
         # Assert the output characteristics of the standardized image
         self.assertIsNotNone(standardized_image, "Standardized image should not be None")
-        self.assertEqual(standardized_image.shape, (224, 224, 3), "Standardized image shape is incorrect")
-        # Add additional checks if required (e.g., data type, normalization range)
+        self.assertEqual(standardized_image.size, (224, 224), "Standardized image size is incorrect")
+        self.assertTrue(isinstance(standardized_image, Image.Image), "Output is not a PIL.Image.Image instance")
+        # Add additional checks if required (e.g., color consistency, format)
 
 if __name__ == "__main__":
     unittest.main()
