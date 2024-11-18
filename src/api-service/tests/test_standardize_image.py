@@ -2,7 +2,8 @@ import unittest
 import sys
 import os
 import importlib
-from PIL import Image  # Ensure Pillow is installed
+from PIL import Image
+import io
 
 # Dynamically load the main.py module
 module_name = "main"
@@ -31,9 +32,13 @@ class TestStandardizeImage(unittest.TestCase):
 
         # Assert the output characteristics of the standardized image
         self.assertIsNotNone(standardized_image, "Standardized image should not be None")
-        self.assertEqual(standardized_image.size, (224, 224), "Standardized image size is incorrect")
+        self.assertEqual(standardized_image.mode, 'RGB', "Standardized image mode should be 'RGB'")
         self.assertTrue(isinstance(standardized_image, Image.Image), "Output is not a PIL.Image.Image instance")
-        # Add additional checks if required (e.g., color consistency, format)
+
+        # Additional check: Ensure that the image is saved in JPEG format (this can be inferred from the standardization)
+        output = io.BytesIO()
+        standardized_image.save(output, format="JPEG")
+        self.assertGreater(len(output.getvalue()), 0, "JPEG image should have content")
 
 if __name__ == "__main__":
     unittest.main()

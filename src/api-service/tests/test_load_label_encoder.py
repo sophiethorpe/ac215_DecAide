@@ -16,9 +16,8 @@ spec.loader.exec_module(api_service_main)
 load_label_encoder = getattr(api_service_main, 'load_label_encoder', None)  # Ensure dynamic attribute access
 
 class TestLoadLabelEncoder(unittest.TestCase):
-    @patch("main.open", mock_open=True)  # Mock the file opening
-    @patch("main.pickle.load")  # Mock the pickle loading
-    def test_load_label_encoder(self, mock_pickle_load, mock_open):
+    @patch("joblib.load")  # Mock the joblib.load function
+    def test_load_label_encoder(self, mock_joblib_load):
         if not load_label_encoder:
             self.fail("Function 'load_label_encoder' not found in the module")
 
@@ -26,7 +25,7 @@ class TestLoadLabelEncoder(unittest.TestCase):
         mock_encoder = MagicMock()
         mock_encoder.transform = MagicMock()
         mock_encoder.fit = MagicMock()
-        mock_pickle_load.return_value = mock_encoder
+        mock_joblib_load.return_value = mock_encoder
 
         # Call the actual function
         label_encoder = load_label_encoder()

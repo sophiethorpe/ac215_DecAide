@@ -8,6 +8,14 @@ from unittest.mock import patch, MagicMock
 # Dynamically load the main.py module
 module_name = "main"
 file_path = os.path.join(os.path.dirname(__file__), '../../api-service/main.py')  # Adjust the relative path if needed
+
+# Add api-service directory to sys.path for module resolution
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../api-service')))
+
+# Debug: print sys.path and file_path
+print(sys.path)
+print(file_path)
+
 spec = importlib.util.spec_from_file_location(module_name, file_path)
 api_service_main = importlib.util.module_from_spec(spec)
 sys.modules[module_name] = api_service_main
