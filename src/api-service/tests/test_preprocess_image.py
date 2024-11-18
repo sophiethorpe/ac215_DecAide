@@ -2,16 +2,8 @@ import unittest
 import sys
 import os
 import importlib
+import numpy as np
 from PIL import Image  # Make sure Pillow is installed
-
-# Correctly load the image from the file path
-def standardize_image(image_path: str) -> Image.Image:
-    # Open the image file
-    image = Image.open(image_path)
-    
-    # Convert the image to RGB and re-save it to standardize format and remove metadata
-    image = image.convert("RGB")
-    return image
 
 # Dynamically load the main.py module
 module_name = "main"
@@ -25,20 +17,21 @@ spec.loader.exec_module(api_service_main)
 preprocess_image = getattr(api_service_main, 'preprocess_image', None)
 
 class TestPreprocessImage(unittest.TestCase):
+    def create_mock_image(self):
+        """Creates a mock RGB image for testing."""
+        # Create a 256x256 RGB image with random values
+        width, height = 256, 256
+        array = np.random.randint(0, 256, (height, width, 3), dtype=np.uint8)
+        return Image.fromarray(array)
+
     def test_preprocess_image(self):
         if not preprocess_image:
             self.fail("Function 'preprocess_image' not found in the module")
 
-        # Mock or provide a test image path
-        image_path = 'tests/files/test_image.jpg'
-        
-        # Use standardize_image to standardize the test image
-        try:
-            standardized_image = standardize_image(image_path)
-        except Exception as e:
-            self.fail(f"standardize_image raised an exception: {e}")
-        
-        # Now use preprocess_image with the standardized image
+        # Create a mock standardized image
+        standardized_image = self.create_mock_image()
+
+        # Preprocess the mock image
         try:
             preprocessed_image = preprocess_image(standardized_image)
         except Exception as e:

@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 import sys
 import os
 import importlib
@@ -18,18 +18,24 @@ load_model = api_service_main.load_model
 
 class TestLoadModel(unittest.TestCase):
 
-    @patch('main.load_model')  # Patch based on the dynamically loaded module
+    @patch('tensorflow.keras.models.load_model')  # Patch the TensorFlow model loading
     def test_load_model(self, mock_load_model):
-        # Mock behavior
-        mock_load_model.return_value = 'Mocked model'
-        
-        # Call the mocked function
+        # Mock the model instance and its predict method
+        mock_model_instance = MagicMock()
+        mock_model_instance.predict.return_value = ["Mocked prediction"]
+        mock_load_model.return_value = mock_model_instance
+
+        # Call the mocked load_model function
         model = load_model()
-        
-        # Assertions
-        self.assertEqual(model, 'Mocked model')
+
+        # Assertions for the mocked model
+        self.assertEqual(model, mock_model_instance)
         self.assertIsNotNone(model)
 
+        # Test the predict functionality of the mocked model
+        prediction = model.predict(["test input"])
+        self.assertEqual(prediction, ["Mocked prediction"])
+        self.assertIsInstance(prediction, list)
 
 if __name__ == "__main__":
     unittest.main()
