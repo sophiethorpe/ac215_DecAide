@@ -3,6 +3,7 @@ import pytest
 import sys
 import importlib
 from fastapi.testclient import TestClient
+from unittest.mock import patch
 
 # Dynamically load the main.py module
 module_name = "main"
@@ -28,6 +29,15 @@ def upload_invalid_file(file_path):
         files = {'file': (os.path.basename(file_path), f, 'multipart/form-data')}
         response = client.post("/predict", files=files)  # Use the FastAPI test client to make the POST request
     return response
+
+# Mocking the model loading function
+@pytest.fixture(autouse=True)
+def mock_model_loading():
+    with patch("tensorflow.keras.models.load_model") as mock_load_model:
+        # Mock the behavior of the model's prediction method
+        mock_model_instance = mock_load_model.return_value
+        mock_model_instance.predict.return_value = ['Prediction']  # Mock prediction result
+        yield mock_model_instance  # This provides the mock model instance to tests
 
 # Test case for uploading a PDF file
 def test_upload_pdf():
