@@ -30,7 +30,7 @@ class TestPreprocessImage(unittest.TestCase):
             self.fail("Function 'preprocess_image' not found in the module")
 
         # Mock or provide a test image path
-        image_path = 'tests/files/test_image.jpg'  # Update with an actual test image path or mock the input
+        image_path = 'tests/files/test_image.jpg'
         
         # Use standardize_image to standardize the test image
         try:

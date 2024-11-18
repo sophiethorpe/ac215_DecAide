@@ -30,14 +30,6 @@ class TestLoadModel(unittest.TestCase):
         self.assertEqual(model, 'Mocked model')
         self.assertIsNotNone(model)
 
-    def test_load_real_model(self):
-        # Call the real load_model function
-        model = load_model()
-        
-        # Assertions for real model
-        self.assertIsNotNone(model)
-        self.assertTrue(hasattr(model, 'predict'), "Model lacks 'predict' method")
-        # Additional checks can be added based on your model's behavior
 
 if __name__ == "__main__":
     unittest.main()

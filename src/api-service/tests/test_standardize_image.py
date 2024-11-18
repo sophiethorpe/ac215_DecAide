@@ -20,7 +20,7 @@ class TestStandardizeImage(unittest.TestCase):
             self.fail("Function 'standardize_image' not found in the module")
 
         # Mock or provide a test image path
-        image_path = 'tests/test_image.jpg'  # Update with an actual test image or a mocked path
+        image_path = 'tests/files/test_image.jpg'
         
         # Call the actual function
         standardized_image = standardize_image(image_path)
