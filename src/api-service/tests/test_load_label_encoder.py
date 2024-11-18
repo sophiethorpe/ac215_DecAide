@@ -16,7 +16,7 @@ spec.loader.exec_module(api_service_main)
 load_label_encoder = getattr(api_service_main, 'load_label_encoder', None)  # Ensure dynamic attribute access
 
 class TestLoadLabelEncoder(unittest.TestCase):
-    @patch("main.open")  # Mock the file opening
+    @patch("main.open", mock_open=True)  # Mock the file opening
     @patch("main.pickle.load")  # Mock the pickle loading
     def test_load_label_encoder(self, mock_pickle_load, mock_open):
         if not load_label_encoder:
