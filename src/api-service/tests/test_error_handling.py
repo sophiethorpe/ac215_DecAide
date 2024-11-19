@@ -27,6 +27,8 @@ spec.loader.exec_module(api_service_main)
 app = getattr(api_service_main, "app", None)
 if app is None:
     raise ImportError("Failed to find 'app' in the dynamically imported module")
+else:
+    print(f"Successfully imported 'app' from {file_path}")  # Debug: Confirm app is loaded
 
 # Set up the FastAPI TestClient
 client = TestClient(app)
