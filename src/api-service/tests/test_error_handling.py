@@ -97,7 +97,7 @@ def test_upload_pdf(mock_model_loading):  # Accept the mock model fixture here
 
 # Test case for uploading an empty file
 def test_upload_empty_file(mock_model_loading):  # Accept the mock model fixture here
-    empty_file = "tests/files/empty.jpg"
+    empty_file = "tests/files/empty_image.jpg"
     file_dir = os.path.dirname(empty_file)
     if not os.path.exists(file_dir):
         os.makedirs(file_dir, exist_ok=True)
