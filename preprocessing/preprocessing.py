@@ -64,7 +64,7 @@ if __name__ == "__main__":
         print("Please provide input folder name (no parent path).")
         sys.exit(1)
 
-    input_folder = './decaide_data/' + in_name
+    input_folder = '../secrets/pics/' + in_name
     output_folder = '../secrets/clean_data'
     metadata_file = '../secrets/clean_metadata.csv'
 
