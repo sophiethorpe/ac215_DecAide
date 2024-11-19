@@ -37,7 +37,7 @@ client = TestClient(app)
 @pytest.fixture(autouse=True)
 def mock_model_loading():
     # Make sure to patch the path where 'load_model' is called in the app (main.py)
-    with patch("api_service.main.load_model") as mock_load_model:
+    with patch("api_service_main.load_model") as mock_load_model:
         # Mock the model instance and its predict method
         mock_model_instance = MagicMock()
         mock_model_instance.predict.return_value = [[0.1, 0.2, 0.7]]  # Example of a mock prediction
