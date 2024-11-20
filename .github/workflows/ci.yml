@@ -43,13 +43,13 @@ jobs:
       run: |
         npm install
         npm install --save-dev @babel/plugin-proposal-private-property-in-object  # Install missing Babel plugin
-      working-directory: src/frontend/image-year-predictor
+      working-directory: src/frontend/image-year-predictor/
 
     # Step 5: Run ESLint for JavaScript linting
     - name: Run ESLint
       run:  npx eslint src/**/*.js --fix
       working-directory: src/frontend/image-year-predictor/
-      continue-on-error: true
+      # continue-on-error: true
 
     # Step 6: Set up Python for Flake8 and Testing
     - name: Set up Python
@@ -86,7 +86,7 @@ jobs:
       run: |
         source venv/bin/activate
         pytest --cov=src --cov-report=term-missing tests  # Run tests from the tests folder
-      continue-on-error: true
+      # continue-on-error: true
       working-directory: .
       env:
         CI: true
@@ -95,15 +95,16 @@ jobs:
     - name: Generate and Verify JavaScript Coverage
       shell: /usr/bin/bash -e {0}
       run: |
-        npm run test -- --coverage --watchAll=false --detectOpenHandles  # Generate the coverage report
+        npm install --save-dev jest
+        npm run test  # Generate the coverage report
         
-        if [ -f src/frontend/image-year-predictor/coverage/coverage-final.json ]; then
-          COVERAGE=$(jq '.total.lines.pct' < src/frontend/image-year-predictor/coverage/coverage-final.json)
+        if [ -f coverage/coverage-final.json ]; then
+          COVERAGE=$(jq '.total.lines.pct' < coverage/coverage-final.json)
           echo "JavaScript Coverage: $COVERAGE%"
         else
           echo "Coverage file not found!"
 
       continue-on-error: true  
-      working-directory: src/frontend/image-year-predictor/coverage
+      working-directory: src/frontend/image-year-predictor/
       env:
         CI: true
