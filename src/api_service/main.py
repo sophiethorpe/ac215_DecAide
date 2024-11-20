@@ -188,7 +188,7 @@ async def generate_caption(file: UploadFile = File(...)):
                 content={
                     "error": ("Invalid file format."
                               " Please upload a valid JPG,"
-                              "PNG, or WEBP image.")
+                              " PNG, or WEBP image.")
                 },
                 status_code=400,
             )
