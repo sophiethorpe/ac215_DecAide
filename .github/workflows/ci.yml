@@ -95,15 +95,7 @@ jobs:
     - name: Generate and Verify JavaScript Coverage
       run: |
         npm install --save-dev jest @testing-library/dom @testing-library/user-event @testing-library/react @testing-library/jest-dom jest-environment-jsdom --legacy-peer-deps
-
         npm run test  # Generate the coverage report
-        
-        if [ -f coverage/coverage-final.json ]; then
-          COVERAGE=$(jq '.total.lines.pct' < coverage/coverage-final.json)
-          echo "JavaScript Coverage: $COVERAGE%"
-        else
-          echo "Coverage file not found!"
-        fi
       continue-on-error: true  
       working-directory: src/frontend/image-year-predictor/
       env:
