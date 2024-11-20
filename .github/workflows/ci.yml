@@ -93,7 +93,6 @@ jobs:
 
     # Step 11: Generate and Verify JavaScript Coverage
     - name: Generate and Verify JavaScript Coverage
-      shell: /usr/bin/bash -e
       run: |
         npm install --save-dev jest @testing-library/dom @testing-library/user-event @testing-library/react @testing-library/jest-dom jest-environment-jsdom --legacy-peer-deps
 
