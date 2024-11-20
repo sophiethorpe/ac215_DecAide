@@ -114,62 +114,62 @@ function App() {
     } finally {
       setLoadingCaption(false); // Reset loading state after the request
     }
-};
+  };
 
 
-return (
-  <div className="App">
-    {/* Background container */}
-    <div className="background-container" style={backgroundStyle}></div>
-    <div className="banner">
-  <h1>DecAide: The Virtual Fashion Historian</h1>
-  <p><i>This tool is for celebrity stylists who need an efficient way to understand historical fashion references to style their clients 
+  return (
+    <div className="App">
+      {/* Background container */}
+      <div className="background-container" style={backgroundStyle}></div>
+      <div className="banner">
+        <h1>DecAide: The Virtual Fashion Historian</h1>
+        <p><i>This tool is for celebrity stylists who need an efficient way to understand historical fashion references to style their clients 
   using clothing featured on high fashion runways.</i></p>
-  </div>
-    <br />
-    
-    <div className="content-container">
-      {/* Left column: Predicted Year and Caption */}
-      <div className="left-column">
-      <h3>1. Upload an image here:</h3>
-        <p><small>Supported file types: .jpg, .jpeg, .png, .webp</small></p>
-        {/* Custom file upload button */}
-    <label htmlFor="file-upload" className="action-button">
-      Choose File
-    </label>
-    <input
-      id="file-upload"
-      type="file"
-      onChange={handleFileChange}
-      style={{ display: 'none' }} // Hide the default input
-    />
-        <div className="image-container">
-        {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: 'auto', height: '400px', maxWidth: '400px' }} />}
-    </div>
-        
       </div>
+      <br />
+    
+      <div className="content-container">
+        {/* Left column: Predicted Year and Caption */}
+        <div className="left-column">
+          <h3>1. Upload an image here:</h3>
+          <p><small>Supported file types: .jpg, .jpeg, .png, .webp</small></p>
+          {/* Custom file upload button */}
+          <label htmlFor="file-upload" className="action-button">
+      Choose File
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            onChange={handleFileChange}
+            style={{ display: 'none' }} // Hide the default input
+          />
+          <div className="image-container">
+            {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: 'auto', height: '400px', maxWidth: '400px' }} />}
+          </div>
+        
+        </div>
       
-      {/* Right column: Display uploaded image */}
-<div className="right-column">
-  <div className="section">
-    <h3>2. Predict the year:</h3>
-    <button onClick={handleSubmit} disabled={loadingYear} className="action-button">
-      {loadingYear ? 'Predicting...' : 'Predict Year'}
-    </button>
-    {predictedYear && <h2 className="result">{`${predictedYear}`}</h2>}
-  </div>
+        {/* Right column: Display uploaded image */}
+        <div className="right-column">
+          <div className="section">
+            <h3>2. Predict the year:</h3>
+            <button onClick={handleSubmit} disabled={loadingYear} className="action-button">
+              {loadingYear ? 'Predicting...' : 'Predict Year'}
+            </button>
+            {predictedYear && <h2 className="result">{`${predictedYear}`}</h2>}
+          </div>
 
-  <div className="section">
-    <h3>3. Generate a caption:</h3>
-    <button onClick={handleCaptionSubmit} disabled={loadingCaption} className="action-button">
-      {loadingCaption ? 'Generating Caption...' : 'Generate Caption'}
-    </button>
-    {generatedCaption && <p className="result">{`${generatedCaption}`}</p>}
-  </div>
-</div>
+          <div className="section">
+            <h3>3. Generate a caption:</h3>
+            <button onClick={handleCaptionSubmit} disabled={loadingCaption} className="action-button">
+              {loadingCaption ? 'Generating Caption...' : 'Generate Caption'}
+            </button>
+            {generatedCaption && <p className="result">{`${generatedCaption}`}</p>}
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
 
 }
 

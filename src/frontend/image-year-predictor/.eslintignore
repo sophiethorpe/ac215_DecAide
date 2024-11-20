@@ -1,0 +1,12 @@
+# Ignore the node_modules directory
+node_modules/*
+
+# Ignore the build or dist directory
+build/
+dist/
+
+# Ignore all JavaScript files in the logs folder
+logs/*.js
+
+# Ignore all files in a specific folder (e.g., ignore all files in test folder)
+test/

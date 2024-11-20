@@ -33,7 +33,7 @@ jobs:
     - name: Cache node modules
       uses: actions/cache@v3
       with:
-        path: node_modules
+        path: src/frontend/image-year-predictor/node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
@@ -47,8 +47,8 @@ jobs:
 
     # Step 5: Run ESLint for JavaScript linting
     - name: Run ESLint
-      run: npm run lint
-      working-directory: src/frontend/image-year-predictor/src
+      run:  npx eslint src/**/*.js --fix
+      working-directory: src/frontend/image-year-predictor/
       continue-on-error: true
 
     # Step 6: Set up Python for Flake8 and Testing
