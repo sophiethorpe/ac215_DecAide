@@ -39,7 +39,7 @@ test('displays uploaded image when a valid image file is selected', async () => 
   expect(uploadedImage).toHaveAttribute('src', mockImageUrl);
 });
 
-test('does not upload invalid file types and shows alert', () => {
+test('does not upload invalid file types and shows alert', async () => {
   render(<App />);
   const fileInput = screen.getByLabelText(/Choose File/i);
 
@@ -47,7 +47,8 @@ test('does not upload invalid file types and shows alert', () => {
   const file = new File(['test'], 'test.txt', { type: 'text/plain' });
   fireEvent.change(fileInput, { target: { files: [file] } });
 
-  expect(window.alert).toHaveBeenCalledWith('Please upload a valid image file.');
+  // Wait for alert to be triggered
+  await waitFor(() => expect(window.alert).toHaveBeenCalledWith('Please upload a valid image file.'));
 });
 
 test('predicts the year when the Predict Year button is clicked', async () => {
@@ -98,7 +99,7 @@ test('generates a caption when the Generate Caption button is clicked', async ()
   expect(fetch).toHaveBeenCalledWith("http://localhost:8000/generate-caption", expect.anything());
 });
 
-test('disables the Predict Year button while loading', () => {
+test('disables the Predict Year button while loading', async () => {
   render(<App />);
   const fileInput = screen.getByLabelText(/Choose File/i);
 
@@ -109,10 +110,11 @@ test('disables the Predict Year button while loading', () => {
   const predictButton = screen.getByRole('button', { name: /Predict Year/i });
   fireEvent.click(predictButton);
 
-  expect(predictButton).toBeDisabled();
+  // Wait for loading to complete (Ensure that the button gets disabled while loading)
+  await waitFor(() => expect(predictButton).toBeDisabled());
 });
 
-test('disables the Generate Caption button while loading', () => {
+test('disables the Generate Caption button while loading', async () => {
   render(<App />);
   const fileInput = screen.getByLabelText(/Choose File/i);
 
@@ -123,5 +125,6 @@ test('disables the Generate Caption button while loading', () => {
   const captionButton = screen.getByRole('button', { name: /Generate Caption/i });
   fireEvent.click(captionButton);
 
-  expect(captionButton).toBeDisabled();
+  // Wait for loading to complete (Ensure that the button gets disabled while loading)
+  await waitFor(() => expect(captionButton).toBeDisabled());
 });
