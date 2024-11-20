@@ -1,15 +1,42 @@
-import unittest
-from ..src.api_service.main import load_label_encoder  # Adjusted the import path to match your structure
+import joblib
+from unittest.mock import patch, MagicMock
+from src.api_service.main import load_label_encoder
 
-class TestLoadLabelEncoder(unittest.TestCase):
-
-    def test_load_label_encoder(self):
-        label_encoder = load_label_encoder()  # Call your actual function to load the label encoder
+def test_load_label_encoder_success():
+    """
+    Test the load_label_encoder function for the success case.
+    """
+    # Mock the joblib.load function to return a mocked label encoder
+    with patch("joblib.load") as mock_load:
+        # Simulate a successful label encoder load by returning a mocked label encoder object
+        mock_label_encoder = "mocked_label_encoder"
+        mock_load.return_value = mock_label_encoder
         
-        # Assert the label encoder is loaded correctly
-        self.assertIsNotNone(label_encoder)
-        self.assertTrue(hasattr(label_encoder, 'transform'))  # Check if the label encoder has the transform method
-        # Add more assertions as needed
+        # Call the load_label_encoder function
+        result = load_label_encoder()
 
-if __name__ == "__main__":
-    unittest.main()
+        # Assert that the label encoder returned is the mocked value
+        assert result == mock_label_encoder, "Expected label encoder to be loaded successfully"
+        
+        # Assert that the joblib.load function was called with the correct file path
+        mock_load.assert_called_once_with('label_encoder.pkl')
+
+
+def test_load_label_encoder_failure(caplog):
+    """
+    Test the load_label_encoder function when there is an error loading the label encoder.
+    """
+    with patch("joblib.load") as mock_load:
+        # Simulate an exception when loading the label encoder
+        mock_load.side_effect = Exception("Label encoder file not found.")
+        
+        # Call the function
+        result = load_label_encoder()
+
+        # Assert that the label encoder was not loaded (i.e., function returns None)
+        assert result is None, "Expected None when there is an error loading the label encoder"
+
+        # Assert that the error was logged correctly
+        # caplog will capture log messages during the test
+        assert "Error loading label encoder: Label encoder file not found." in caplog.text, \
+            "Expected 'Error loading label encoder: Label encoder file not found.' in the log output"

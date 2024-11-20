@@ -48,7 +48,7 @@ def load_model():
     # Load the model here instead of on startup
     logging.debug("Loading model...")
     try:
-        model = tf.keras.models.load_model("best_model.h5.keras")
+        model = tf.keras.models.load_model("./best_model.h5.keras")
         logging.debug("Model loaded successfully!")
         return model
     except Exception as e:
@@ -106,14 +106,15 @@ async def predict(file: UploadFile = File(...)):
         return JSONResponse(content={"error": "Label encoder could not be loaded."}, status_code=500)
 
     try:
+        # If the file is a .txt file, you can handle it separately
+        if file.content_type not in ['image/jpeg', 'image/png', 'image/webp']:
+            logging.debug("Received a text file, not an image.")
+            return JSONResponse(content={"error": "Invalid file format. Please upload a valid JPG, PNG, or WEBP image."}, status_code=400)
+        
         # Read the image file
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)) # Load the image
         image = standardize_image(image) # Standardize image to strip metadata
-
-        # Ensure it's a JPG, PNG, or WEBP image before proceeding (even if the extension is correct)
-        if image.format not in ['JPEG', 'JPG', "PNG", "WEBP"]:
-            raise HTTPException(status_code=400, detail="Invalid image format. Please upload a valid JPG, PNG, or WEBP image.")
 
         # Preprocess the image
         logging.debug(f"Processing image: {file.filename}")
@@ -145,14 +146,15 @@ async def generate_caption(file: UploadFile = File(...)):
     logging.debug(f"File received: {file.filename}")
     
     try:
+        # If the file is a .txt file, you can handle it separately
+        if file.content_type not in ['image/jpeg', 'image/png', 'image/webp']:
+            logging.debug("Received a text file, not an image.")
+            return JSONResponse(content={"error": "Invalid file format. Please upload a valid JPG, PNG, or WEBP image."}, status_code=400)
+
         # Read the image file
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)) # Load the image
         image = standardize_image(image) # Standardize image to strip metadata
-
-        # Check if the file is a JPG, PNG, or webp image
-        if not file.filename.lower().endswith(('.jpg', '.jpeg', ".png", ".webp")):
-            raise HTTPException(status_code=400, detail="Invalid file format. Please upload a JPG, JPEG, PNG, or WebP image.")
 
         # Preprocess the image for caption generation
         logging.debug(f"Processing image for caption generation: {file.filename}")

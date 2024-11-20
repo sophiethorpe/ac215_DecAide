@@ -1,0 +1,4 @@
+[core]
+    remote = decaide_data
+['remote "decaide_data"']
+    url = gs://ac215-decaide/dvc_store

@@ -1,29 +1,41 @@
-import unittest
-from unittest.mock import patch
-from ..src.api_service.main import load_model  # Adjusted the import path to match your structure
+from unittest.mock import patch, MagicMock
+from src.api_service.main import load_model  # Adjusted the import path to match your structure
 
-class TestLoadModel(unittest.TestCase):
-
-    # Mocking the load_model function to return a mock model instead of actually loading the real model
-    @patch('src.api_service.main.load_model')  # Adjusted the patch path to match your module structure
-    def test_load_model(self, mock_load_model):
-        # Define what the mock should return when called
-        mock_load_model.return_value = 'Mocked model'
+def test_load_model_success():
+    """
+    Test the load_model function when the model loads successfully.
+    """
+    with patch("tensorflow.keras.models.load_model") as mock_load_model:
+        # Create a mock model object
+        mock_model = MagicMock()
         
-        # Call the mocked load_model function
-        model = load_model()
+        # Simulate successful model loading
+        mock_load_model.return_value = mock_model
         
-        # Test the behavior of the function
-        self.assertEqual(model, 'Mocked model')  # Verify that the return value is what we expected
-        self.assertIsNotNone(model)  # Assert that the model is not None (additional safeguard)
-
-    def test_load_real_model(self):
-        # This test will actually load the real model to check its attributes, if you don't want to mock it
-        model = load_model()  # Call the real load_model function
+        # Call the function
+        result = load_model()
         
-        # Assert the model is loaded correctly and has essential attributes (e.g., predict method)
-        self.assertIsNotNone(model)
-        self.assertTrue(hasattr(model, 'predict'))  # Ensure model has a predict method or other required attributes
+        # Assert that the model was loaded
+        mock_load_model.assert_called_once_with("./best_model.h5.keras")
+        
+        # Assert that the returned model is the mocked model
+        assert result == mock_model, "Expected the mock model to be returned"
 
-if __name__ == "__main__":
-    unittest.main()
+def test_load_model_failure(caplog):
+    """
+    Test the load_model function when there is an error loading the model.
+    """
+    with patch("tensorflow.keras.models.load_model") as mock_load_model:
+        # Simulate an exception when loading the model
+        mock_load_model.side_effect = Exception("Model file not found.")
+        
+        # Call the function
+        result = load_model()
+
+        # Assert that the model was not loaded (i.e., function returns None)
+        assert result is None, "Expected None when there is an error loading the model"
+
+        # Assert that the error was logged correctly
+        # caplog will capture log messages during the test
+        assert "Error loading model: Model file not found." in caplog.text, \
+            "Expected 'Error loading model: Model file not found.' in the log output"
