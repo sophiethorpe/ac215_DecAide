@@ -204,7 +204,7 @@ body {
 .logo-container {
   position: absolute;
   bottom: 10px; /* Distance from the bottom of the page */
-  left: 50%; /* Center horizontally */
+  left: 55%; /* Center horizontally */
   transform: translateX(-50%); /* Adjust to center */
   z-index: 100; /* Ensure it appears above other elements */
   text-align: center;
