@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import logo from './logo.svg';
+import icon from './favicon.ico';
 
 function App() {
   // Array of background images
@@ -29,7 +30,7 @@ function App() {
     left: 0,
     height: '100vh',
     width: '100vw',
-    animation: `panVertical${animationKey} 30s linear 1`,
+    animation: `panVertical${animationKey} 30s linear infinite`,
     opacity: 0.3,
     zIndex: -1,
     transition: 'background-image 2s ease-in-out',
@@ -107,9 +108,29 @@ function App() {
       setLoadingCaption(false);
     }
   };
+// handle favicon logo loading 
+
+useEffect(() => {
+  const intervalId = setInterval(() => {
+    setBgIndex((prevIndex) => (prevIndex + 1) % backgrounds.length);
+    setAnimationKey((prevKey) => (prevKey + 1) % backgrounds.length);
+  }, 15000);
+
+  return () => clearInterval(intervalId);
+}, [backgrounds.length]);
+
+useEffect(() => {
+  const link = document.querySelector("link[rel='icon']");
+  if (link) {
+    link.href = icon;  // Setting the favicon icon
+  }
+}, []);
 
   return (
     <div className="App">
+      <meta charSet="utf-8" />
+      <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <div className="background-container" style={backgroundStyle}></div>
 
       <div className="banner">
