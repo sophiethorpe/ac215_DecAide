@@ -127,21 +127,28 @@ useEffect(() => {
 }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={{ overflowX: 'hidden' }}>
       <meta charSet="utf-8" />
       <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <div className="background-container" style={backgroundStyle}></div>
 
-      <div className="banner">
-        <h1>DecAide: The Virtual Fashion Historian</h1>
-        <p>
-          <i>
-            A tool to help celebrity stylists quickly access{" "}
-            historical fashion references to style clients with runway clothing.
-          </i>
-        </p>
-      </div>
+      <div className="banner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+  <div className="logo-container" style={{ position: 'absolute', left: '140px' }}>
+    <img src={logo} alt="Logo" style={{ maxWidth: '200px', marginTop: '20px' }} />
+  </div>
+  <div style={{ textAlign: 'center' }}>
+    <h1>DecAide: The Virtual Fashion Historian</h1>
+    <p>
+      <i>
+        A tool to help celebrity stylists quickly access{" "}
+        historical fashion references to style clients with runway clothing.
+      </i>
+    </p>
+  </div>
+</div>
+
+
 
       <div className="content-container">
         <div className="steps-container">
@@ -181,9 +188,6 @@ useEffect(() => {
               {generatedCaption && <p className="result">{generatedCaption}</p>}
             </div>
 
-            <div className="logo-container">
-              <img src={logo} alt="Logo" style={{ maxWidth: '200px', marginTop: '20px' }} />
-            </div>
           </div>
         </div>
       </div>
