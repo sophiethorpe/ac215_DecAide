@@ -3,7 +3,7 @@
   text-align: center;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  overflow: fixed;
   background-size: cover;
   background-position: center;
 }
@@ -12,7 +12,6 @@
   height: 40vmin;
   pointer-events: none;
 }
-
 
 .App-header {
   background-color: #282c34;
@@ -30,54 +29,48 @@
 /* Keyframes for vertical pan effect for each image */
 @keyframes panVertical0 {
   0% {
-    background-position: top center; /* Start at the top */
+    background-position: top center;
   }
   100% {
-    background-position: bottom center; /* Move to the bottom */
+    background-position: bottom center;
   }
 }
 
 @keyframes panVertical1 {
   0% {
-    background-position: top center; /* Start at the top */
+    background-position: top center;
   }
   100% {
-    background-position: bottom center; /* Move to the bottom */
+    background-position: bottom center;
   }
 }
-
 
 @keyframes panVertical2 {
   0% {
-    background-position: top center; /* Start at the top */
+    background-position: top center;
   }
   100% {
-    background-position: bottom center; /* Move to the bottom */
+    background-position: bottom center;
   }
 }
-
 
 @keyframes panVertical3 {
   0% {
-    background-position: top center; /* Start at the top */
+    background-position: top center;
   }
   100% {
-    background-position: bottom center; /* Move to the bottom */
+    background-position: bottom center;
   }
 }
-
 
 @keyframes panVertical4 {
   0% {
-    background-position: top center; /* Start at the top */
+    background-position: top center;
   }
   100% {
-    background-position: bottom center; /* Move to the bottom */
+    background-position: bottom center;
   }
 }
-
-
-
 
 .App-link {
   color: #61dafb;
@@ -98,7 +91,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1; /* Ensure the background is behind the content */
+  z-index: -1;
 }
 
 .background-overlay {
@@ -107,48 +100,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity here */
-  z-index: -1; /* Ensure overlay is behind content */
-}
-
-/* Two-column layout styles */
-.content-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  max-width: 1200px;
-  width: 100%;
-  margin: 20px auto; /* Center the content container */
-}
-
-.left-column {
-  flex: 1.5;
-  padding: 20px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background-color: transparent;
-  text-align: left;
-}
-
-.right-column {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  justify-content: left;
-  text-align: left;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background-color: transparent;
-  gap: 30px;
-  flex-direction: column;  /* Stack sections vertically */
-  align-items: flex-start;  /* Align to the left for better spacing */
-}
-
-.section {
-  padding: 10px;  /* Add padding for a better look */
-  border-radius: 8px;  /* Optional: round corners */
-  background-color: transparent;  /* Semi-transparent background */
-  width: 100%;  /* Ensure each section takes full width */
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: -1;
 }
 
 .action-button {
@@ -167,60 +120,137 @@
 
 /* Image container for better control */
 .image-container {
-  margin-top: 20px; /* Space between the button and the image */
+  margin-top: 20px;
+  text-align: center; /* Centers the image */
 }
 
-/* Font for action buttons */
 .action-button {
-  font-family: 'Ostrich Sans', sans-serif; /* Change this to your desired font */
-  font-weight: 300; /* Light font weight */
-  font-size: 16px; /* Adjust size as needed */
-  padding: 10px 20px; /* Optional: adjust the padding for better button appearance */
-  cursor: pointer; /* Makes the button clickable */
-  border: none; /* Optional: remove default border */
-  background-color: rgba(252, 148, 130, 0.7); /* Optional: change background color */
-  color: white; /* Optional: change text color */
-  border-radius: 5px; /* Optional: rounded corners */
-  transition: background-color 0.3s; /* Optional: smooth background color transition on hover */
+  font-family: 'Ostrich Sans', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: rgba(252, 148, 130, 0.7);
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
 .action-button:hover {
-  background-color: rgb(252, 148, 130); /* Optional: change background color on hover */
+  background-color: rgb(252, 148, 130);
 }
 
 h1, h2, h4, p {
   position: relative;
-  z-index: 3; /* Ensure text is on top of background */
+  z-index: 3;
   font-family: 'Ostrich Sans', sans-serif;
-  font-weight: 300; /* Light font weight */
+  font-weight: 300;
 }
 
 h3 {
   position: relative;
-  z-index: 3; /* Ensure text is on top of background */
+  z-index: 3;
   font-family: 'Ostrich Sans', sans-serif;
-  font-weight: 400; /* Regular font weight */
+  font-weight: 400;
 }
-
-
 
 body {
   margin: 0;
   font-family: 'Ostrich Sans', sans-serif;
-  font-weight: 400; /* Regular font weight */
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  overflow: auto;
 }
 
 .banner {
-  background-color: rgba(252, 148, 130, 0.7); /* Dark red/pink background */
-  color: white;  /* White text */
-  padding: 20px;  /* Space inside the banner */
-  text-align: center;  /* Center-align the text */
   position: relative;
-  top: 0;
   width: 100%;
+  top: 0;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  z-index: 1;
+  background-color: rgba(252, 148, 130, 0.7);
   font-family: 'Ostrich Sans', sans-serif;
-  font-weight: 300; /* Light font weight */
+  font-weight: 500;
+}
+
+.steps-container {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  justify-content: center;
+  gap: 200px; /* Space between columns */
+  margin-top: 50px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.step {
+  flex: 1 1 calc(50% - 40px); /* Two columns with equal width minus the gap */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.step h3 {
+  margin-bottom: 20px;
+}
+
+.step button {
+  margin-top: 20px;
+}
+
+.step .image-container {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .step {
+    flex: 1 1 100%; /* Single column on smaller screens */
+  }
+}
+
+.logo-container {
+  position: absolute;
+  bottom: 10px; /* Distance from the bottom of the page */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust to center */
+  z-index: 100; /* Ensure it appears above other elements */
+  text-align: center;
+}
+
+.logo-container img {
+  max-width: 200px;
+  height: auto;
+}
+
+.caption-container {
+  position: relative;
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  border-radius: 8px;
+  overflow-y: auto; /* Allow scrolling if the caption grows */
+  max-height: 50vh; /* Prevent it from taking over the screen */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left; /* Align text for better readability */
+}
+
+.image-container img {
+  max-width: 100%; /* Prevent overflow */
+  max-height: 60vh; /* Limit height for large images */
+  object-fit: contain; /* Maintain aspect ratio */
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
