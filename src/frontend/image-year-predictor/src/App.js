@@ -138,7 +138,7 @@ function App() {
                 style={{ display: 'none' }}
               />
               <div className="image-container">
-                {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ maxWidth: '100%', maxHeight: '400px' }} />}
+                {imageUrl && <img src={imageUrl} alt="Uploaded" />}
               </div>
             </div>
           </div>
