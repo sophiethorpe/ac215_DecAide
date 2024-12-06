@@ -9,7 +9,7 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 
 # Copy model and label encoder files into the container
-COPY best_model.h5.keras label_encoder.pkl /app
+COPY best_model.h5.keras label_encoder.pkl /app/
 
 # Install system dependencies (modify for ARM64 compatibility if needed)
 RUN apt update && \

@@ -847,6 +847,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "jest --coverage --watchAll=false --detectOpenHandles --coverageReporters=text --coverageReporters=lcov"
   },
   "author": "",
