@@ -1,27 +1,44 @@
 # Build stage
 FROM node:18-alpine AS build
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Install dependencies
 COPY package.json package-lock.json ./
 RUN npm ci
+
+# Explicitly install the missing Babel plugin
+# RUN npm install --save-dev @babel/plugin-transform-private-property-in-object @babel/plugin-proposal-private-property-in-object @babel/preset-env
 
 # Copy source files
 COPY . .
 
-# Build the React app
+# Build the Next.js app
+# Copy env file for build time
+COPY .env.production .env
 RUN npm run build
 
 # Production stage
-FROM nginx:stable-alpine AS production
+FROM node:18-alpine AS production
 
-# Copy build output from the previous stage
-COPY --from=build /app/build /usr/share/nginx/html
+# Install bash (Alpine doesn't include it by default)
+RUN apk add --no-cache bash
 
-# Expose port 80
-EXPOSE 80
+WORKDIR /app
 
-# Start the NGINX server
-CMD ["nginx", "-g", "daemon off;"]
+# Copy built assets from build stage
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/package-lock.json ./package-lock.json
+COPY --from=build /app/.next ./.next
+COPY --from=build /app/public ./public
+COPY --from=build /app/.env ./.env
+
+# Install only production dependencies
+RUN npm ci --only=production
+
+# Expose the listening port
+EXPOSE 3000
+
+# Run the Next.js app
+# ENTRYPOINT ["/bin/bash"]
+CMD ["npm", "start"]

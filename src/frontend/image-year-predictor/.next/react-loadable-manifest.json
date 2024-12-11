@@ -1,0 +1,20 @@
+{
+  "node_modules/next/dist/client/index.js -> ../pages/_app": {
+    "id": 3709,
+    "files": [
+      "static/chunks/709.d4ddb83c31f97d9d.js"
+    ]
+  },
+  "node_modules/next/dist/client/index.js -> ../pages/_error": {
+    "id": 9916,
+    "files": [
+      "static/chunks/916.fca338d74147be2f.js"
+    ]
+  },
+  "pages/reportWebVitals.js -> web-vitals": {
+    "id": 3237,
+    "files": [
+      "static/chunks/237.c53a152ff1294c32.js"
+    ]
+  }
+}

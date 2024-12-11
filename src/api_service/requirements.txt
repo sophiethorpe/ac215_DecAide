@@ -1,4 +1,4 @@
-tensorflow==2.18.0
+tensorflow
 fastapi
 uvicorn
 numpy
@@ -14,5 +14,4 @@ python-multipart
 joblib
 scikit-learn
 transformers
-torch
 httpx

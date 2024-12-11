@@ -1,16 +1,31 @@
 #!/bin/bash
 
-# Step 1: Build the Docker image
-echo "Building Docker image for ARM64 platform..."
-docker buildx build --platform linux/arm64 -t my_fastapi_app --load .
+# exit immediately if a command exits with a non-zero status
+set -e
 
-# Step 2: Check if the build was successful
-if [ $? -ne 0 ]; then
-    echo "Docker build failed. Exiting."
-    exit 1
-fi
+# Define some environment variables
+export IMAGE_NAME="decaide-app-api-service"
+export BASE_DIR=$(pwd)
+export SECRETS_DIR=$(pwd)/../../secrets/
+export PERSISTENT_DIR=$(pwd)/../../persistent-folder/
+export GCP_PROJECT="ac215-decaide" # CHANGE TO YOUR PROJECT ID
 
-# Step 3: Run the Docker container
-echo "Running Docker container on port 8000..."
-docker run -p 8000:8000 my_fastapi_app
+# Create the network if we don't have it yet
+docker network inspect decaide-app-network >/dev/null 2>&1 || docker network create decaide-app-network
 
+# Build the image based on the Dockerfile
+#docker build -t $IMAGE_NAME -f Dockerfile .
+# M1/2 chip macs use this line
+docker build -t $IMAGE_NAME --platform=linux/arm64/v8 -f Dockerfile .
+
+# Run the container
+docker run --rm --name $IMAGE_NAME -ti \
+-v "$BASE_DIR":/app \
+-v "$SECRETS_DIR":/secrets \
+-v "$PERSISTENT_DIR":/persistent \
+-p 9000:9000 \
+-e DEV=1 \
+-e GOOGLE_APPLICATION_CREDENTIALS=/secrets/ml-workflow.json \
+-e GCP_PROJECT=$GCP_PROJECT \
+--network decaide-app-network \
+$IMAGE_NAME

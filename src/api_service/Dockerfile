@@ -1,28 +1,57 @@
 # Use a Python 3.11 base image for compatibility
-FROM python:3.11-slim
+# Use the official Debian-hosted Python image
+FROM python:3.12-slim-bookworm
 
-# Set the working directory in the container
+ARG DEBIAN_PACKAGES="build-essential git screen vim"
+
+# If GPU support is not required, ensure no CUDA operations are attempted
+ENV CUDA_VISIBLE_DEVICES=""
+
+# Prevent apt from showing prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Python wants UTF-8 locale
+ENV LANG=C.UTF-8
+
+# Tell pipenv where the shell is. This allows us to use "pipenv shell" as a
+# container entry point.
+ENV PYENV_SHELL=/bin/bash
+
+# Tell Python to disable buffering so we don't lose any logs.
+ENV PYTHONUNBUFFERED=1
+
+# Ensure we have an up to date baseline, install dependencies and
+# create a user so we don't run the app as root
+RUN set -ex; \
+    for i in $(seq 1 8); do mkdir -p "/usr/share/man/man${i}"; done && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends $DEBIAN_PACKAGES && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install --no-cache-dir --upgrade pip && \
+    pip install pipenv && \
+    useradd -ms /bin/bash app -d /home/app -u 1000 -p "$(openssl passwd -1 Passw0rd)" && \
+    mkdir -p /app && \
+    mkdir -p /persistent && \
+    chown app:app /persistent && \
+    chown app:app /app
+
+
+# # Switch to the new user
+USER app
 WORKDIR /app
 
-# Copy requirements file and install dependencies
-COPY requirements.txt /app/requirements.txt
-RUN pip install --upgrade pip && pip install -r /app/requirements.txt
+# Install python packages
 
-# Copy model and label encoder files into the container
-COPY best_model.h5.keras label_encoder.pkl /app/
+ADD --chown=app:app Pipfile Pipfile.lock /app/
+RUN pipenv sync
 
-# Install system dependencies (modify for ARM64 compatibility if needed)
-RUN apt update && \
-    apt install -y build-essential python3-dev pkg-config zip zlib1g-dev unzip curl wget git htop \
-    openjdk-17-jdk liblapack3 libblas3 libhdf5-dev npm && \
-    rm -rf /var/lib/apt/lists/*
 
-# Health check to ensure FastAPI is running
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD curl -f http://localhost:8000/ || exit 1
+# Add the rest of the source code. This is done last so we don't invalidate all
+# layers when we change a line of code.
+ADD --chown=app:app . /app
 
-# Copy app source code
-COPY . /app
-
-# Run the FastAPI app with Uvicorn
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload", "--log-level", "debug"]
+# Entry point
+# ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/bash", "./docker-entrypoint.sh"]

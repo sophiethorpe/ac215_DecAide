@@ -2,13 +2,10 @@
 
 set -e
 
-export IMAGE_NAME="decaide-frontend"
+export IMAGE_NAME="decaide-app-frontend-react"
 
-# Build the development image
-docker build -t $IMAGE_NAME -f Dockerfile.dev .
+# Build the image based on the Dockerfile
+docker build -t $IMAGE_NAME -f Dockerfile .
 
-# Run the container with volume mounting and port mapping
-docker run --rm --name $IMAGE_NAME -ti \
-  -v "$(pwd):/app" \
-  -p 3000:3000 \
-  $IMAGE_NAME
+# Run the container
+docker run --rm --name $IMAGE_NAME -ti -v "$(pwd)/:/app/" -p 3000:3000 $IMAGE_NAME

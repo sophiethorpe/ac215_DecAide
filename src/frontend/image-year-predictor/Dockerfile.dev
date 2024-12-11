@@ -1,20 +1,13 @@
 FROM node:20-alpine
 
-# Install dependencies
 RUN set -ex; \
     apk update && \
     apk add --no-cache bash && \
     mkdir -p /app
 
-# Set the working directory
-WORKDIR /app
-
-# Install dependencies for the app
-COPY package.json package-lock.json ./
-RUN npm ci
-
-# Expose port 3000 for React development server
 EXPOSE 3000
 
-# Start React development server
-CMD ["npm", "start"]
+# Switch to app
+WORKDIR /app
+
+ENTRYPOINT ["/bin/bash"]
