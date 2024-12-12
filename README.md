@@ -100,11 +100,7 @@
 
 **Project:** The "DecAide" project is a virtual tool designed to help celebrity stylists quickly access historical fashion references by analyzing high-fashion runway images. The team scraped approximately 6,000 runway images from vogue.com and trained a deep learning model using transfer learning with ResNet50. The model categorizes fashion looks by era, allowing stylists to streamline their research process when styling clients, especially for events like the Met Gala, where specific fashion themes must be followed. The project utilizes Docker containers and Google Cloud for scalability, with plans for further model optimization and deployment.
 
-Our midterm presentation is in the `Midterm Presentation` folder.
-
-## **Milestone4**
-
-In this milestone, we have the components for frontend, API service, also components from previous milestones for data management, including versioning, as well as the computer vision and language models. This will be our user-facing application that ties together the various components built in previous milestones.
+We have the components for frontend, API service, also components from previous milestones for data management, including versioning, as well as the computer vision and language models. This will be our user-facing application that ties together the various components built in previous milestones.
 
 ### Application Design
 
@@ -151,27 +147,16 @@ We built a React app to identify the year and other related information for a fa
     + `npm start`
     + The React web app will launch in a new Chrome browser window! You may need to install some dependencies related to React before `npm start` can be run (Node.js and `npm install`).
 
-## **Milestone3**
 
-In this milestone, we have the components for data management, including versioning, and the computer vision model.  
+We have the components for data management, including versioning, and the computer vision model.  
 
 **Data** The current version of images are scarped from *runway images on vougue.com*. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. PLEASE DO NOT RUN the notebooks for time considerations.
-
-## **Midterm Presentation**
-
-*The `Midterm Presentation` directory contains the slides from our presentation.*
 
 <br>
 
 ## **Notebooks**
 
 *The `notebooks` directory contains the eda_intial_mdoels notebook that outlines our prelimnary model.*
-
-<br>
-
-## **References**
-
-*The `references` directoey contains `Milestone 3_Draft.docx` it outlines the contents of our milestone 3 presentation, amnd includes a reference.*
 
 <br>
 
