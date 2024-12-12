@@ -15,6 +15,9 @@
 │   └── technical-arch.png
 ├── notebooks
 │   └── eda_initial_models_ac215.ipynb
+├── package-lock.json
+├── package.json
+├── pytest.ini
 ├── references
 │   └── Milestone 3_ Draft .docx
 ├── reports
@@ -24,12 +27,21 @@
 │           ├── APCOMP 215 Milestone 2 Mock Up.pdf
 │           └── Milestone 2 Mock Up Backend.pdf
 ├── src
-│   ├── api-service
+│   ├── __pycache__
+│   │   └── __init__.cpython-310.pyc
+│   ├── api_service
 │   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── __pycache__
+│   │   │   ├── main.cpython-310.pyc
+│   │   │   └── main.cpython-311.pyc
+│   │   ├── api
+│   │   │   └── service.py
 │   │   ├── best_model.h5.keras
+│   │   ├── docker-entrypoint.sh
 │   │   ├── docker-shell.sh
 │   │   ├── label_encoder.pkl
-│   │   ├── main.py
 │   │   └── requirements.txt
 │   ├── datapipeline
 │   │   ├── data_versioning
@@ -45,47 +57,126 @@
 │   │   │   ├── Pipfile.lock
 │   │   │   ├── docker-entrypoint.sh
 │   │   │   ├── docker-shell.sh
-│   │   │   └── preprocessing.py
+│   │   │   ├── preprocessing.py
+│   │   │   └── upload.py
 │   │   └── scraping
+│   │       ├── data
+│   │       │   ├── npics_temp.txt
+│   │       │   ├── shows_season.csv
+│   │       │   ├── shows_season_long.csv
+│   │       │   └── test
+│   │       │       └── shows_0_2
+│   │       │           ├── fall-2006-ready-to-wear_antonio-berardi_collection#1.jpg
+│   │       │           ├── fall-2006-ready-to-wear_antonio-berardi_collection#2.jpg
+│   │       │           ├── fall-2006-ready-to-wear_antonio-berardi_collection#3.jpg
+│   │       │           ├── fall-2006-ready-to-wear_antonio-berardi_collection#4.jpg
+│   │       │           ├── fall-2006-ready-to-wear_prada_collection#1.jpg
+│   │       │           ├── fall-2006-ready-to-wear_prada_collection#2.jpg
+│   │       │           ├── fall-2006-ready-to-wear_prada_collection#3.jpg
+│   │       │           └── fall-2006-ready-to-wear_prada_collection#4.jpg
 │   │       ├── download_pics.ipynb
-│   │       └── scraping_urls.ipynb
+│   │       ├── scrape_getty.py
+│   │       ├── scraping.ipynb
+│   │       ├── scraping_older.ipynb
+│   │       ├── scraping_urls.ipynb
+│   │       ├── test.py
+│   │       └── vogue_webscraping.py
+│   ├── deployment
+│   │   ├── Dockerfile
+│   │   ├── Pipfile
+│   │   ├── Pipfile.lock
+│   │   ├── cli.py
+│   │   ├── deploy-create-instance.yml
+│   │   ├── deploy-docker-images-app.yml
+│   │   ├── deploy-k8s-cluster_CPU.yml
+│   │   ├── deploy-k8s-cluster_GPU.yml
+│   │   ├── deploy-k8s-update.sh
+│   │   ├── deploy-provision-instance.yml
+│   │   ├── deploy-setup-containers.yml
+│   │   ├── deploy-setup-webserver.yml
+│   │   ├── docker-entrypoint.sh
+│   │   ├── docker-shell.sh
+│   │   ├── inventory-prod.yml
+│   │   ├── inventory_CPU.yml
+│   │   ├── inventory_GPU.yml
+│   │   ├── model.py
+│   │   ├── nginx-conf
+│   │   │   └── nginx
+│   │   │       └── nginx.conf
+│   │   ├── run-data-collector.sh
+│   │   ├── run-data-processor.sh
+│   │   ├── run-ml-pipeline.sh
+│   │   └── update-k8s-cluster.yml
 │   ├── frontend
 │   │   └── image-year-predictor
+│   │       ├── Dockerfile
+│   │       ├── Dockerfile.dev
 │   │       ├── README.md
+│   │       ├── __tests__
+│   │       │   └── App.test.js
+│   │       ├── babel.config.js
+│   │       ├── coverage
+│   │       │   ├── coverage-final.json
+│   │       │   ├── lcov-report
+│   │       │   │   ├── App.js.html
+│   │       │   │   ├── base.css
+│   │       │   │   ├── block-navigation.js
+│   │       │   │   ├── favicon.png
+│   │       │   │   ├── index.html
+│   │       │   │   ├── prettify.css
+│   │       │   │   ├── prettify.js
+│   │       │   │   ├── sort-arrow-sprite.png
+│   │       │   │   └── sorter.js
+│   │       │   └── lcov.info
+│   │       ├── docker-shell.sh
+│   │       ├── eslint.config.js
+│   │       ├── jest.config.js
+│   │       ├── next.config.js
 │   │       ├── package-lock.json
 │   │       ├── package.json
+│   │       ├── pages
+│   │       │   ├── App.css
+│   │       │   ├── App.js
+│   │       │   ├── App_backup
+│   │       │   ├── _app.js
+│   │       │   ├── about.js
+│   │       │   ├── favicon.ico
+│   │       │   ├── index.css
+│   │       │   ├── index.js
+│   │       │   ├── logo.svg
+│   │       │   └── reportWebVitals.js
 │   │       ├── public
-│   │       │   ├── background1.jpg
-│   │       │   ├── background2.jpg
-│   │       │   ├── background3.jpg
-│   │       │   ├── background4.jpg
-│   │       │   ├── background5.jpg
 │   │       │   ├── favicon.ico
 │   │       │   ├── index.html
-│   │       │   ├── logo192.png
-│   │       │   ├── logo512.png
+│   │       │   ├── logo_decaide-removebg-preview.png
+│   │       │   ├── logo_decaide.png
 │   │       │   ├── manifest.json
 │   │       │   └── robots.txt
+│   │       ├── setupTests.js
 │   │       └── src
-│   │           ├── App.css
-│   │           ├── App.js
-│   │           ├── index.css
-│   │           ├── index.js
-│   │           ├── logo.svg
-│   │           ├── reportWebVitals.js
-│   │           └── setupTests.js
 │   └── models
 │       └── modeling
 │           └── updated_models_ac215.ipynb
 └── tests
-    ├── App.test.js
-    ├── test_error_handling.py
-    ├── test_generate_caption.py
-    ├── test_generate_caption_endpoint
+    ├── __init__.py
+    ├── __pycache__
+    │   ├── __init__.cpython-310.pyc
+    │   ├── test_error_handling.cpython-310-pytest-7.4.3.pyc
+    │   ├── test_generate_caption_endpoint.cpython-310-pytest-7.4.3.pyc
+    │   ├── test_load_label_encoder.cpython-310-pytest-7.4.3.pyc
+    │   ├── test_load_model.cpython-310-pytest-7.4.3.pyc
+    │   ├── test_predict_endpoint.cpython-310-pytest-7.4.3.pyc
+    │   ├── test_preprocess_image.cpython-310-pytest-7.4.3.pyc
+    │   └── test_standardize_image.cpython-310-pytest-7.4.3.pyc
+    ├── files
+    │   ├── empty.jpg
+    │   ├── image.txt
+    │   ├── sample.pdf
+    │   └── test_image.jpg
+    ├── test_generate_caption_endpoint.py
     ├── test_load_label_encoder.py
     ├── test_load_model.py
-    ├── test_predict.py
-    ├── test_predict_endpoint
+    ├── test_predict_endpoint.py
     ├── test_preprocess_image.py
     └── test_standardize_image.py
 
