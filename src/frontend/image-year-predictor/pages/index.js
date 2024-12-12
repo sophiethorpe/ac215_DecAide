@@ -8,13 +8,15 @@ export default function Home() {
   const darktextColor = "#5b5567"
   const lighttextColor = "#f3f3eb"
   const buttonColor = "#949a89"
+  const highlightColor = "#ffb725"
 
   const titletextStyle = {
     fontFamily: "Garamond, serif",
-    color: "#b53e2c",
+    color: "#d33e27",
     fontSize: "60px",
     textAlign: "center",
     letterSpacing: "1px",
+    textShadow: "3px 2px 1px rgba(243, 243, 235, 0.94)"
   };
   const regularlighttextStyle = {
     fontFamily: "Garamond, serif",
@@ -39,6 +41,16 @@ export default function Home() {
     textAlign: "center",
     textDecoration: "none",
     margin: "0 30px",
+    textShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)"
+  };
+  const highlightStyle = {
+    fontFamily: "Garamond, serif",
+    color: highlightColor,
+    fontSize: "36px",
+    textAlign: "center",
+    textDecoration: "none",
+    margin: "0 30px",
+    textShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)"
   };
 
   return (
@@ -77,7 +89,7 @@ export default function Home() {
 
         {/* Navigation */}
         <nav style={navbarStyle}>
-          <Link href="/" style={linkStyle}>
+          <Link href="/" style={highlightStyle}>
             Home
           </Link>
           <Link href="/App" style={linkStyle}>
@@ -98,15 +110,14 @@ export default function Home() {
           padding: "20px 0",
         }}
       >
-        <h1 style={{...titletextStyle, textShadow: "2px 1px 5px rgba(0, 0, 0, 0.3)"}}>DecAide: The Virtual Fashion Historian</h1>
+        <h1 style={titletextStyle}>DecAide <br/> Your Virtual Fashion Historian <br/><br/></h1>
         <p style={{
           fontFamily: "Garamond, serif",
           color: "#b53e2c",
           fontSize: "24px",
-          textShadow: "0px 1px 1px rgba(0, 0, 0, 0.3)",
         }}>
           A tool to help celebrity stylists quickly access historical fashion
-          references to style clients with runway clothing.
+          references to style clients with runway clothing.<br/><br/><br/><br/>
         </p>
       </div>
 

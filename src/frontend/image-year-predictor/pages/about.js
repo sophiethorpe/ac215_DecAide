@@ -6,6 +6,7 @@ export default function About() {
   const darktextColor = "#5b5567"
   const lighttextColor = "#f3f3eb"
   const buttonColor = "#949a89"
+  const highlightColor = "#ffb725"
 
   const titletextStyle = {
     fontFamily: "Garamond, serif",
@@ -42,6 +43,16 @@ export default function About() {
     textAlign: "center",
     textDecoration: "none",
     margin: "0 30px",
+    textShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)"
+  };
+  const highlightStyle = {
+    fontFamily: "Garamond, serif",
+    color: highlightColor,
+    fontSize: "36px",
+    textAlign: "center",
+    textDecoration: "none",
+    margin: "0 30px",
+    textShadow: "1px 2px 1px rgba(0, 0, 0, 0.1)"
   };
 
   return (
@@ -86,7 +97,7 @@ export default function About() {
           <Link href="/App" style={linkStyle}>
             App
           </Link>
-          <Link href="/about" style={linkStyle}>
+          <Link href="/about" style={highlightStyle}>
             About
           </Link>
         </nav>
@@ -101,42 +112,33 @@ export default function About() {
         }}
       >
         <h1 style={titletextStyle}>DecAide: The Virtual Fashion Historian</h1>
+        <img
+          src="/developers.jpg"
+          alt="Logo"
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "40%",
+          }}
+        />
         <p style={regulardarktextStyle}>
-            Data Pipeline
+            We are Tom, Sophie, Josha, and Paige. <br/><br/>
 
-            Datasets
+            The "DecAide" project is a virtual tool for celebrity stylists to access historical fashion references. By analyzing 6,000 runway images scraped from Vogue.com, the team trained a deep learning model using ResNet50 to categorize fashion looks by era. This streamlines styling for themed events like the Met Gala. The project uses Docker and Google Cloud for scalability, with plans for further model optimization and deployment. The application workflow is visualized in the figure below.
 
-            The current version of images are scraped from runway images on vougue.com. Beautifulsoup and Requests-HTML packages are used. Total of 4221 shows are scraped. Among those, we scraped ~150 shows, including all years from 1988 to 2015, resulting in ~6000 runway pictures. It takes ~3 seconds to scrape a picture. We sourced this data from here. 
-
-            Our dataset is downloaded and stored in a Google Cloud Bucket.
-
-            Data preprocessing
-
-            The processing pipeline is used to resize the images and make the resolutions compatible for our models. The output of this pipeline is resized jpg images. The processing is done locally using Docker containers, then the processed images can be uploaded to Google Cloud buckets.
-
-
-            Data versioning
-
-            We use DVC as our data versioning pipeline. Our DVC setup uses one remote. 
-
-            Model training and optimisation
-
-            Model summary
-
-
-            Our model employs transfer learning, making use of a ResNet50 model initially trained on the ImageNet dataset. More information on the ResNet50 Model can be found here. A global average pooling layer was added along with a dense layer and the output layer, which outputs a year category for each image. The last ten layers of the ResNet50 model were unfrozen and trained. Categorical cross-entropy was used for the loss, Adam for the optimizer, accuracy for the metric, and the model was trained for thirty epochs.
-
-            Training scripts and container
-
-
-
-            Experiment Tracking
-
-            We use Weights and Biases to track model performance, log evaluation metrics and save the final model.
-
-
-            Serverless Training Pipeline
         </p>
+        <img
+          src="/Diagram.png"
+          alt="Logo"
+          style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "80%",
+          }}
+        />
+        <p><br/><br/><br/><br/></p>
       </div>
       
       
