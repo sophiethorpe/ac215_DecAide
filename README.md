@@ -219,7 +219,7 @@ We built a backend API service using Fast API to connect the model with our fron
 
 We built a React app to identify the year and other related information for a fashion image using computer vision models from the backend. Using the app, a celebrity stylist user can take a picture of an outfit and upload it. The app will send the image to the backend API to get a prediction of the year, generated text caption, and retrieve similar images. 
 
-![](images/frontend.jpeg)
+![](images/frontend.png)
 
 ### Steps for running the web app locally
 
