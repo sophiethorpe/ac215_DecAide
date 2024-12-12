@@ -1,6 +1,6 @@
-## Project Milestone 4 Organization
+## Project Organization
 
-**The following diagram is based on the milestone4 branch where we stored the relevant information for the milestone 4 deliverable.**
+**The following diagram is based on the main branch we used for our final deliverable**
 <br>
 
 ```
