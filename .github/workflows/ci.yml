@@ -1,0 +1,102 @@
+name: CI - Build, Lint, and Test with Coverage
+
+on:
+  push:
+    branches:
+      - main
+      - milestone2
+      - milestone3
+      - milestone4
+  pull_request:
+    branches:
+      - main
+      - milestone2
+      - milestone3
+      - milestone4
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js for ESLint and JavaScript testing
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    # Step 3: Cache node_modules for faster installs
+    - name: Cache node modules
+      uses: actions/cache@v3
+      with:
+        path: src/frontend/image-year-predictor/node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    # Step 4: Install dependencies for JavaScript
+    - name: Install dependencies for JavaScript
+      run: |
+        npm install
+        npm install --save-dev @babel/plugin-proposal-private-property-in-object  # Install missing Babel plugin
+      working-directory: src/frontend/image-year-predictor/
+
+    # Step 5: Run ESLint for JavaScript linting
+    - name: Run ESLint
+      run:  npx eslint src/**/*.js --fix
+      working-directory: src/frontend/image-year-predictor/
+      # continue-on-error: true
+
+    # Step 6: Set up Python for Flake8 and Testing
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    # Step 7: Cache Python dependencies
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: venv
+        key: ${{ runner.os }}-python-${{ hashFiles('src/api_service/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-python-
+
+    # Step 8: Install dependencies for Python (using requirements.txt in api-service folder)
+    - name: Install dependencies for Python
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r src/api_service/requirements.txt
+        pip install flake8 pytest pytest-cov
+
+    # Step 9: Run Flake8 for Python linting
+    - name: Run Flake8
+      run: |
+        source venv/bin/activate
+        flake8 src/api_service
+      continue-on-error: true
+
+    # Step 10: Run Unit, Integration, and System Tests for Python with Coverage
+    - name: Run Python Tests with Coverage
+      run: |
+        source venv/bin/activate
+        pytest --cov=src --cov-report=term-missing tests  # Run tests from the tests folder
+      # continue-on-error: true
+      working-directory: .
+      env:
+        CI: true
+
+    # Step 11: Generate and Verify JavaScript Coverage
+    - name: Generate and Verify JavaScript Coverage
+      run: |
+        npm install --save-dev jest @testing-library/dom @testing-library/user-event @testing-library/react @testing-library/jest-dom jest-environment-jsdom --legacy-peer-deps
+        npm run test  # Generate the coverage report
+      continue-on-error: true  
+      working-directory: src/frontend/image-year-predictor/
+      env:
+        CI: true
